@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voces de la Tierra — Lenguas y Culturas Indígenas de Costa Rica</title>
+  <meta name="description" content="Portal interactivo para aprender y preservar las lenguas, comidas, medicina, arte y cultura de los pueblos indígenas de Costa Rica.">
+  <meta name="theme-color" content="#C85A32">
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23C85A32'/%3E%3Ctext x='50' y='65' font-size='40' text-anchor='middle' fill='white'%3E🌿%3C/text%3E%3C/svg%3E" type="image/svg+xml">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" stroke="%23C85A32" stroke-width="2"/><path d="M14 4 L18 12 L14 10 L10 12 Z" fill="%23E9C46A"/><circle cx="14" cy="16" r="4" fill="%232A9D8F"/></svg>
+    Voces de la <span>Tierra</span>
+  </div>
+  <div class="nav-links">
+    <a href="#" data-page="home" class="active">Inicio</a>
+    <a href="#" data-page="preguntar">Preguntar</a>
+    <a href="#" data-page="explorar">Explorar</a>
+    <a href="#" data-page="pueblos">Pueblos</a>
+    <a href="#" data-page="glosario">Glosario</a>
+  </div>
+  <button class="nav-toggle" aria-label="Menú">☰</button>
+</nav>
+
+<!-- HOME -->
+<section class="section active" id="page-home">
+  <div class="hero">
+    <div class="hero-particles" id="particles"></div>
+    <div class="hero-badge">⟡ Patrimonio Vivo de Costa Rica</div>
+    <h1>Voces de la <span class="highlight">Tierra</span></h1>
+    <p class="subtitle">Portal interactivo para aprender y preservar las lenguas, comidas, medicina, arte y cosmovisión de los pueblos indígenas de Costa Rica</p>
+    <div class="phrase-rotator">
+      <span class="phrase-text" style="transition:opacity 0.5s">"La tierra no es herencia de nuestros padres, es préstamo de nuestros hijos"</span>
+    </div>
+    <div class="btn-group">
+      <a href="#" class="btn btn-primary" onclick="navigate('preguntar');return false;">🎤 Preguntar</a>
+      <a href="#" class="btn btn-secondary" onclick="navigate('explorar');return false;">🌿 Explorar</a>
+    </div>
+  </div>
+  <div id="home-content"></div>
+  <div class="pattern-divider"></div>
+</section>
+
+<!-- PREGUNTAR -->
+<section class="section" id="page-preguntar">
+  <div class="section-tag">Sabiduría ancestral</div>
+  <h2>Pregunta, te responderá la memoria</h2>
+  <p class="section-desc">Habla o escribe tu pregunta sobre lenguas, comidas, medicina, arte o cultura indígena. La voz de los abuelos te responderá.</p>
+
+  <div class="qa-container">
+    <div class="qa-input-group">
+      <input type="text" id="qa-input" placeholder='Ej: "¿cómo se dice hola en bribri?" o "¿qué es el Juego de los Diablitos?"' autocomplete="off">
+      <button class="btn-voice" id="qa-voice" title="Preguntar por voz">🎤</button>
+      <button class="btn-send" id="qa-send">Preguntar →</button>
+    </div>
+
+    <div class="voice-indicator" id="voice-indicator">
+      <div class="wave"><span></span><span></span><span></span><span></span><span></span></div>
+      <span class="label">Escuchando...</span>
+    </div>
+
+    <div class="qa-suggestions" id="qa-suggestions"></div>
+
+    <div class="qa-response" id="qa-response">
+      <div class="response-card">
+        <div class="response-category">Sabiduría</div>
+        <div class="response-text">Pregunta algo y te compartiré el conocimiento de los pueblos indígenas de Costa Rica.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPLORAR -->
+<section class="section" id="page-explorar">
+  <div class="section-tag">Conocimiento</div>
+  <h2>Explora la sabiduría indígena</h2>
+  <p class="section-desc">Selecciona una categoría para descubrir las tradiciones y conocimientos de los pueblos originarios.</p>
+  <div class="explore-grid" id="explore-grid"></div>
+</section>
+
+<!-- PUEBLOS -->
+<section class="section" id="page-pueblos">
+  <div class="section-tag">Pueblos indígenas</div>
+  <h2>Los 7 pueblos de Costa Rica</h2>
+  <p class="section-desc">Cada pueblo tiene su propia lengua, cosmovisión y tradiciones. Todos pertenecen a la gran familia Chibcha.</p>
+  <div class="pueblos-grid" id="pueblos-grid"></div>
+  <div class="pueblo-detail" id="pueblo-detail"></div>
+</section>
+
+<!-- GLOSARIO -->
+<section class="section" id="page-glosario">
+  <div class="section-tag">Vocabulario</div>
+  <h2>Glosario de lenguas indígenas</h2>
+  <p class="section-desc">Busca palabras en las 7 lenguas indígenas de Costa Rica con su traducción al español y pronunciación.</p>
+
+  <div class="glosario-controls">
+    <select id="glosario-lang"></select>
+    <select id="glosario-cat"></select>
+    <input type="text" id="glosario-search" placeholder="Buscar palabra...">
+  </div>
+
+  <table class="glosario-table">
+    <thead><tr><th>Lengua indígena</th><th>Español</th><th>Pronunciación</th><th>Pueblo</th></tr></thead>
+    <tbody id="glosario-body"></tbody>
+  </table>
+</section>
+
+<!-- LISTENING INDICATOR (fixed) -->
+<div class="listening-indicator" id="listening-indicator">🎤 Escuchando...</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-pattern"></div>
+  <p><strong>Voces de la Tierra</strong> — Proyecto de preservación cultural · Costa Rica 2026</p>
+  <p style="margin-top:0.3rem;font-size:0.75rem;">Datos basados en fuentes académicas y comunitarias. Cada palabra es un acto de resistencia cultural.</p>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/tts.js"></script>
+<script src="js/qa.js"></script>
+<script src="js/app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+function navigate(page) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('page-' + page);
+  if (el) el.classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.toggle('active', a.dataset.page === page));
+  if (page === 'home') window.scrollTo({ top: 0, behavior: 'smooth' });
+  else document.querySelector('.section.active')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const p = document.getElementById('particles');
+  if (p) {
+    for (let i = 0; i < 20; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'particle';
+      dot.style.left = Math.random() * 100 + '%';
+      dot.style.top = Math.random() * 100 + '%';
+      dot.style.animationDelay = Math.random() * 6 + 's';
+      dot.style.animationDuration = (4 + Math.random() * 4) + 's';
+      p.appendChild(dot);
+    }
+  }
+});
+</script>
+</body>
+</html>
