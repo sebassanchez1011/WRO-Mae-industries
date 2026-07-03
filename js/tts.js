@@ -9,6 +9,7 @@ const VOCES_TTS = {
   onListeningChange: null,
   autoRestart: false,
   manualStop: false,
+  pttMode: false,
 
   init() {
     if (!window.speechSynthesis) { console.warn('TTS no soportado'); return; }
@@ -19,7 +20,7 @@ const VOCES_TTS = {
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (SR) {
       this.recognition = new SR();
-      this.recognition.lang = 'es-ES';
+      this.recognition.lang = 'es-CR';
       this.recognition.continuous = true;
       this.recognition.interimResults = true;
       this.recognition.maxAlternatives = 3;
@@ -36,7 +37,7 @@ const VOCES_TTS = {
       };
 
       this.recognition.onend = () => {
-        if (this.isListening && !this.manualStop) {
+        if (this.isListening && !this.manualStop && this.autoRestart) {
           try { this.recognition.start(); } catch(e) {}
         } else {
           this.isListening = false;
@@ -56,13 +57,14 @@ const VOCES_TTS = {
 
   loadVoices() {
     const voices = this.synthesis.getVoices();
+    console.log('Voces disponibles:', voices.map(v => v.name + ' (' + v.lang + ')').join(', '));
     const preferred = [
-      'Microsoft Helena',
-      'Microsoft Sabina',
-      'Microsoft Laura',
-      'Microsoft Pablo',
       'Google español',
       'Google español de Estados Unidos',
+      'Microsoft Sabina',
+      'Microsoft Helena',
+      'Microsoft Laura',
+      'Microsoft Pablo',
       'es-ES'
     ];
     for (const name of preferred) {
@@ -71,6 +73,7 @@ const VOCES_TTS = {
     }
     if (!this.voice) this.voice = voices.find(v => v.lang.startsWith('es')) || voices[0] || null;
     if (this.voice) this.voiceName = this.voice.name;
+    console.log('Voz seleccionada:', this.voiceName);
   },
 
   speak(text, onEnd) {
@@ -81,9 +84,9 @@ const VOCES_TTS = {
     if (!cleanText) return;
 
     const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.lang = 'es-ES';
-    utterance.rate = 0.85;
-    utterance.pitch = 1.0;
+    utterance.lang = 'es-CR';
+    utterance.rate = 0.8;
+    utterance.pitch = 0.9;
     utterance.volume = 1;
     if (this.voice) utterance.voice = this.voice;
 
@@ -103,7 +106,7 @@ const VOCES_TTS = {
       alert('El reconocimiento de voz no está disponible en este navegador. Prueba con Chrome, Edge o Brave.');
       return;
     }
-    if (this.isListening) { this.stopListening(); return; }
+    if (this.isListening) return;
     this.manualStop = false;
     this.isListening = true;
     if (this.onListeningChange) this.onListeningChange(true);
@@ -116,6 +119,25 @@ const VOCES_TTS = {
       try { this.recognition.stop(); } catch(e) {}
       this.isListening = false;
       if (this.onListeningChange) this.onListeningChange(false);
+    }
+  },
+
+  startPTT() {
+    this.pttMode = true;
+    this.autoRestart = false;
+    this.startListening();
+  },
+
+  stopPTT(callback) {
+    this.pttMode = false;
+    if (this.recognition && this.isListening) {
+      this.manualStop = true;
+      try { this.recognition.stop(); } catch(e) {}
+      this.isListening = false;
+      if (this.onListeningChange) this.onListeningChange(false);
+      if (callback) setTimeout(callback, 200);
+    } else {
+      if (callback) callback();
     }
   },
 
