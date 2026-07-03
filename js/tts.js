@@ -1,11 +1,14 @@
 const VOCES_TTS = {
   synthesis: window.speechSynthesis,
   voice: null,
+  voiceName: '',
   isSpeaking: false,
   isListening: false,
   recognition: null,
   onResult: null,
   onListeningChange: null,
+  autoRestart: false,
+  manualStop: false,
 
   init() {
     if (!window.speechSynthesis) { console.warn('TTS no soportado'); return; }
@@ -13,27 +16,38 @@ const VOCES_TTS = {
     if (speechSynthesis.onvoiceschanged !== undefined)
       speechSynthesis.onvoiceschanged = () => this.loadVoices();
 
-    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SR) {
       this.recognition = new SR();
       this.recognition.lang = 'es-ES';
-      this.recognition.continuous = false;
+      this.recognition.continuous = true;
       this.recognition.interimResults = true;
-      this.recognition.maxAlternatives = 1;
+      this.recognition.maxAlternatives = 3;
 
       this.recognition.onresult = (e) => {
-        const last = e.results.length - 1;
-        const transcript = e.results[last][0].transcript;
-        if (this.onResult) this.onResult(transcript, e.results[last].isFinal);
+        let finalTranscript = '';
+        let interimTranscript = '';
+        for (let i = e.resultIndex; i < e.results.length; i++) {
+          const transcript = e.results[i][0].transcript;
+          if (e.results[i].isFinal) finalTranscript += transcript;
+          else interimTranscript += transcript;
+        }
+        if (this.onResult) this.onResult(finalTranscript || interimTranscript, !!finalTranscript);
       };
 
       this.recognition.onend = () => {
-        this.isListening = false;
-        if (this.onListeningChange) this.onListeningChange(false);
+        if (this.isListening && !this.manualStop) {
+          try { this.recognition.start(); } catch(e) {}
+        } else {
+          this.isListening = false;
+          this.manualStop = false;
+          if (this.onListeningChange) this.onListeningChange(false);
+        }
       };
 
       this.recognition.onerror = (e) => {
-        console.warn('Speech recognition error:', e.error);
+        if (e.error === 'no-speech' || e.error === 'aborted') return;
+        console.warn('Speech error:', e.error);
         this.isListening = false;
         if (this.onListeningChange) this.onListeningChange(false);
       };
@@ -42,21 +56,37 @@ const VOCES_TTS = {
 
   loadVoices() {
     const voices = this.synthesis.getVoices();
-    this.voice = voices.find(v => v.lang.startsWith('es') && v.name.includes('Microsoft'))
-      || voices.find(v => v.lang.startsWith('es'))
-      || voices[0] || null;
+    const preferred = [
+      'Microsoft Helena',
+      'Microsoft Sabina',
+      'Microsoft Laura',
+      'Microsoft Pablo',
+      'Google español',
+      'Google español de Estados Unidos',
+      'es-ES'
+    ];
+    for (const name of preferred) {
+      this.voice = voices.find(v => v.name.includes(name));
+      if (this.voice) { this.voiceName = this.voice.name; break; }
+    }
+    if (!this.voice) this.voice = voices.find(v => v.lang.startsWith('es')) || voices[0] || null;
+    if (this.voice) this.voiceName = this.voice.name;
   },
 
   speak(text, onEnd) {
     if (!this.synthesis) return;
     this.synthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
+    this.loadVoices();
+    const cleanText = text.replace(/<[^>]*>/g, '').trim();
+    if (!cleanText) return;
+
+    const utterance = new SpeechSynthesisUtterance(cleanText);
     utterance.lang = 'es-ES';
-    utterance.rate = 0.88;
+    utterance.rate = 0.85;
     utterance.pitch = 1.0;
     utterance.volume = 1;
-    this.loadVoices();
     if (this.voice) utterance.voice = this.voice;
+
     this.isSpeaking = true;
     utterance.onend = () => { this.isSpeaking = false; if (onEnd) onEnd(); };
     utterance.onerror = () => { this.isSpeaking = false; };
@@ -70,10 +100,11 @@ const VOCES_TTS = {
 
   startListening() {
     if (!this.recognition) {
-      alert('El reconocimiento de voz no está disponible en este navegador. Prueba con Chrome o Edge.');
+      alert('El reconocimiento de voz no está disponible en este navegador. Prueba con Chrome, Edge o Brave.');
       return;
     }
-    if (this.isListening) return;
+    if (this.isListening) { this.stopListening(); return; }
+    this.manualStop = false;
     this.isListening = true;
     if (this.onListeningChange) this.onListeningChange(true);
     try { this.recognition.start(); } catch(e) { this.isListening = false; }
@@ -81,9 +112,16 @@ const VOCES_TTS = {
 
   stopListening() {
     if (this.recognition && this.isListening) {
-      this.recognition.stop();
+      this.manualStop = true;
+      try { this.recognition.stop(); } catch(e) {}
       this.isListening = false;
+      if (this.onListeningChange) this.onListeningChange(false);
     }
+  },
+
+  toggleListening() {
+    if (this.isListening) this.stopListening();
+    else this.startListening();
   },
 
   isSupported() {
