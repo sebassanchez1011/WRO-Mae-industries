@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   VOCES_TTS.init();
   let currentQuery = '';
   let lastAnimacion = '';
+  let currentCategory = null;
 
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
@@ -15,13 +16,18 @@ document.addEventListener('DOMContentLoaded', () => {
     glosario: () => { renderGlosario(); }
   };
 
-  function navigate(page) {
+  window.navigateTo = function(page, cat) {
+    if (cat) currentCategory = cat;
     $$('.section').forEach(s => s.classList.remove('active'));
-    const section = document.getElementById(`page-${page}`);
+    const section = document.getElementById('page-' + page);
     if (section) section.classList.add('active');
     $$('.nav-links a').forEach(a => a.classList.toggle('active', a.dataset.page === page));
     if (pages[page]) pages[page]();
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  function navigate(page) {
+    window.navigateTo(page);
   }
 
   $$('.nav-links a').forEach(a => {
@@ -77,10 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!input || input.dataset.initialized) return;
     input.dataset.initialized = '1';
 
-    const sugs = VOCES_QA.getSuggestions();
-    suggestions.innerHTML = sugs.map(s =>
-      `<button class="suggestion-chip">${s.pregunta}</button>`
-    ).join('');
+    renderSuggestions(currentCategory);
 
     suggestions.addEventListener('click', (e) => {
       const chip = e.target.closest('.suggestion-chip');
@@ -93,28 +96,10 @@ document.addEventListener('DOMContentLoaded', () => {
     sendBtn.addEventListener('click', () => processQuery(input.value));
     input.addEventListener('keydown', (e) => { if (e.key === 'Enter') processQuery(input.value); });
 
-    let pttTranscript = '';
-
-    function startPTT() {
-      pttTranscript = '';
-      input.value = '';
-      input.placeholder = 'Habla ahora...';
-      VOCES_TTS.startPTT();
-    }
-
-    function stopPTT() {
-      input.placeholder = 'Escribe tu pregunta...';
-      VOCES_TTS.stopPTT(() => {
-        const val = input.value.trim();
-        if (val) processQuery(val);
-      });
-    }
-
-    voiceBtn.addEventListener('mousedown', (e) => { e.preventDefault(); startPTT(); });
-    voiceBtn.addEventListener('mouseup', (e) => { e.preventDefault(); stopPTT(); });
-    voiceBtn.addEventListener('mouseleave', (e) => { if (VOCES_TTS.isListening) stopPTT(); });
-    voiceBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startPTT(); });
-    voiceBtn.addEventListener('touchend', (e) => { e.preventDefault(); stopPTT(); });
+    voiceBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      VOCES_TTS.toggleListening();
+    });
 
     VOCES_TTS.onResult = (transcript, isFinal) => {
       if (isFinal) {
@@ -131,11 +116,9 @@ document.addEventListener('DOMContentLoaded', () => {
     VOCES_TTS.onListeningChange = (listening) => {
       if (listening) {
         voiceBtn.classList.add('listening');
-        voiceBtn.classList.add('pressed');
         voiceIndicator.classList.add('active');
       } else {
         voiceBtn.classList.remove('listening');
-        voiceBtn.classList.remove('pressed');
         voiceBtn.classList.remove('has-transcript');
         voiceIndicator.classList.remove('active');
       }
@@ -145,6 +128,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!VOCES_TTS.isSupported()) {
       voiceBtn.style.display = 'none';
     }
+  }
+
+  function renderSuggestions(cat) {
+    const suggestions = document.getElementById('qa-suggestions');
+    if (!suggestions) return;
+    const sugs = VOCES_QA.getSuggestions(cat);
+    suggestions.innerHTML = sugs.map(s =>
+      `<button class="suggestion-chip">${s.pregunta}</button>`
+    ).join('');
   }
 
   function processQuery(query) {
@@ -157,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const input = document.getElementById('qa-input');
 
     if (!result) {
-      const fallback = `Aún no tengo esa sabiduría registrada. Los abuelos siguen compartiendo este conocimiento. Prueba preguntando sobre lenguas, comidas, medicina, arte o cultura indígena.`;
+      const fallback = 'Aún no tengo esa sabiduría registrada. Los abuelos siguen compartiendo este conocimiento. Prueba preguntando sobre lenguas, comidas, medicina, arte o cultura indígena.';
       response.innerHTML = `
         <div class="response-card">
           <div class="response-category">Sabiduría</div>
@@ -167,7 +159,6 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
       response.classList.add('visible');
       VOCES_TTS.speak(fallback);
-      renderAnimation('cosmovision');
       return;
     }
 
@@ -231,13 +222,6 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => { btn.textContent = '📋 Copiar'; }, 2000);
       });
     });
-
-    renderAnimation(an);
-  }
-
-  function renderAnimation(type) {
-    const container = document.querySelector('.anim-container');
-    if (!container) return;
   }
 
   function renderExplore() {
@@ -266,8 +250,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const card = e.target.closest('.explore-card');
       if (card) {
         const cat = card.dataset.cat;
+        currentCategory = cat;
         navigate('preguntar');
         setTimeout(() => {
+          renderSuggestions(cat);
           const input = document.getElementById('qa-input');
           if (input) {
             const catNames = { lengua: 'dime palabras en lenguas indígenas', comida: 'háblame de comida indígena', medicina: 'qué plantas medicinales usan', arte: 'cuéntame del arte indígena', cultura: 'háblame de la cultura indígena' };
