@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voces de la Tierra — Lenguas y Culturas Indígenas de Costa Rica</title>
+  <meta name="description" content="Portal interactivo para aprender y preservar las lenguas, comidas, medicina, arte y cultura de los pueblos indígenas de Costa Rica.">
+  <meta name="theme-color" content="#C85A32">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --terracota: #C85A32;
+  --terracota-dark: #A34425;
+  --turquesa: #2A9D8F;
+  --turquesa-light: #3DBEB0;
+  --oro: #E9C46A;
+  --oro-light: #F4D98A;
+  --crema: #F8F3E3;
+  --bosque: #264653;
+  --bosque-light: #2A5A6B;
+  --tierra: #5C4A3A;
+  --texto: #1A1A1A;
+  --texto-light: #6B6B6B;
+  --fondo: #0F0F1A;
+  --fondo-card: #1A1A2E;
+  --fondo-card-hover: #222240;
+  --borde: rgba(255,255,255,0.08);
+  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --shadow: 0 4px 30px rgba(0,0,0,0.3);
+  --radius: 16px;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  background: var(--fondo);
+  color: #E0E0E0;
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+::selection { background: rgba(42,157,143,0.4); color: #fff; }
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--fondo); }
+::-webkit-scrollbar-thumb { background: var(--terracota); border-radius: 4px; }
+a { color: var(--turquesa); text-decoration: none; transition: color .2s; }
+a:hover { color: var(--turquesa-light); }
+body::before {
+  content: '';
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(200,90,50,0.03) 0%, transparent 50%),
+    radial-gradient(circle at 85% 80%, rgba(42,157,143,0.03) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(233,196,106,0.02) 0%, transparent 50%);
+  pointer-events: none; z-index: 0;
+}
+.pattern-divider {
+  height: 40px; width: 100%; opacity: 0.15;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 20'%3E%3Cpath d='M0,15 L10,5 L20,15 L30,5 L40,15 L50,5 L60,15 L70,5 L80,15 L90,5 L100,15 L110,5 L120,15' fill='none' stroke='%23C85A32' stroke-width='2'/%3E%3C/svg%3E") repeat-x;
+  margin: 1rem 0;
+}
+nav {
+  position: fixed; top: 0; width: 100%; z-index: 1000;
+  background: rgba(15,15,26,0.9); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--borde);
+  padding: 0.8rem 2rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+nav .logo { font-family: var(--font-serif); font-size: 1.4rem; color: #fff; display: flex; align-items: center; gap: 0.5rem; }
+nav .logo svg { width: 28px; height: 28px; }
+nav .logo span { color: var(--terracota); }
+.nav-links { display: flex; gap: 1.8rem; align-items: center; }
+.nav-links a { color: #999; font-size: 0.85rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; transition: color .2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--oro); }
+.nav-toggle { display: none; background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+  text-align: center; padding: 8rem 2rem 4rem; position: relative; z-index: 1;
+}
+.hero-particles {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none;
+}
+.particle {
+  position: absolute; width: 4px; height: 4px; background: var(--oro); border-radius: 50%;
+  animation: float 6s infinite ease-in-out; opacity: 0.3;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.3; }
+  50% { transform: translateY(-30px) scale(1.5); opacity: 0.6; }
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 0.5rem 1.4rem; border-radius: 100px;
+  background: rgba(200,90,50,0.15); color: var(--terracota);
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+  margin-bottom: 1.5rem; border: 1px solid rgba(200,90,50,0.3);
+  animation: fadeInUp 0.8s ease;
+}
+.hero h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(2.8rem, 9vw, 5.5rem);
+  font-weight: 700; color: #fff; line-height: 1.1; margin-bottom: 0.5rem;
+  animation: fadeInUp 0.8s ease 0.2s both;
+}
+.hero h1 .highlight {
+  background: linear-gradient(135deg, var(--terracota), var(--oro));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.hero .subtitle {
+  font-size: clamp(1rem, 2vw, 1.3rem); color: #999;
+  max-width: 600px; margin: 0.5rem auto 2rem;
+  animation: fadeInUp 0.8s ease 0.4s both;
+}
+.hero .phrase-rotator {
+  font-family: var(--font-serif); font-style: italic;
+  font-size: 1rem; color: var(--turquesa); min-height: 2rem;
+  animation: fadeInUp 0.8s ease 0.6s both;
+}
+.hero .phrase-rotator span { display: inline-block; animation: fadeInOut 4s infinite; }
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0; transform: translateY(10px); }
+  20%, 80% { opacity: 1; transform: translateY(0); }
+}
+.btn-group { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 1rem; animation: fadeInUp 0.8s ease 0.8s both; }
+.btn {
+  padding: 0.9rem 2rem; border-radius: 10px; font-weight: 600; font-size: 0.9rem;
+  text-decoration: none; transition: all .25s; border: none; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--font-sans);
+}
+.btn-primary { background: var(--terracota); color: #fff; }
+.btn-primary:hover { background: var(--terracota-dark); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(200,90,50,0.3); }
+.btn-secondary { background: transparent; color: #ccc; border: 1px solid #333; }
+.btn-secondary:hover { border-color: var(--turquesa); color: #fff; transform: translateY(-2px); }
+.btn-voice {
+  width: 56px; height: 56px; border-radius: 50%; background: var(--turquesa);
+  color: #fff; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; transition: all .25s; position: relative;
+}
+.btn-voice:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(42,157,143,0.4); }
+.btn-voice.listening { background: var(--terracota); animation: pulse-mic 1.2s infinite; }
+@keyframes pulse-mic {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(200,90,50,0.6); }
+  50% { box-shadow: 0 0 0 15px rgba(200,90,50,0); }
+}
+.section { display: none; padding: 7rem 2rem 4rem; max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+.section.active { display: block; animation: fadeIn 0.4s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+.section-tag {
+  font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px;
+  color: var(--terracota); font-weight: 600; margin-bottom: 0.5rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.section-tag::before { content: '⟡'; font-size: 1rem; }
+h2 { font-family: var(--font-serif); font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
+h2 + .section-desc { color: #888; margin-bottom: 2.5rem; max-width: 650px; font-size: 1rem; }
+.card {
+  background: var(--fondo-card); border-radius: var(--radius);
+  border: 1px solid var(--borde); padding: 1.5rem;
+  transition: all .3s;
+}
+.card:hover { border-color: rgba(200,90,50,0.2); transform: translateY(-2px); }
+.qa-container {
+  max-width: 800px; margin: 0 auto;
+}
+.qa-input-group {
+  display: flex; gap: 0.8rem; align-items: center;
+  background: var(--fondo-card); border-radius: 16px;
+  padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+  border: 1px solid var(--borde); transition: border-color .3s;
+}
+.qa-input-group:focus-within { border-color: var(--turquesa); }
+.qa-input-group input {
+  flex: 1; background: none; border: none; color: #fff; font-size: 1rem;
+  padding: 0.8rem 0; outline: none; font-family: var(--font-sans);
+}
+.qa-input-group input::placeholder { color: #555; }
+.qa-input-group .btn-send {
+  background: var(--turquesa); color: #fff; border: none; border-radius: 10px;
+  padding: 0.7rem 1.2rem; cursor: pointer; font-weight: 600; font-size: 0.9rem;
+  transition: all .2s; display: flex; align-items: center; gap: 0.4rem;
+}
+.qa-input-group .btn-send:hover { background: var(--turquesa-light); }
+.qa-suggestions {
+  display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;
+}
+.qa-suggestions button {
+  background: rgba(42,157,143,0.1); color: var(--turquesa-light);
+  border: 1px solid rgba(42,157,143,0.2); border-radius: 20px;
+  padding: 0.4rem 1rem; font-size: 0.8rem; cursor: pointer;
+  transition: all .2s; font-family: var(--font-sans);
+}
+.qa-suggestions button:hover { background: rgba(42,157,143,0.2); border-color: var(--turquesa); }
+.qa-response {
+  margin-top: 1.5rem; display: none;
+  animation: fadeIn 0.5s ease;
+}
+.qa-response.visible { display: block; }
+.qa-response .response-card {
+  background: var(--fondo-card); border-radius: var(--radius);
+  border: 1px solid var(--borde); padding: 1.8rem;
+  position: relative; overflow: hidden;
+}
+.qa-response .response-card::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+  background: linear-gradient(to bottom, var(--terracota), var(--turquesa));
+}
+.qa-response .response-category {
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px;
+  color: var(--oro); font-weight: 600; margin-bottom: 0.5rem;
+}
+.qa-response .response-text {
+  font-size: 1.05rem; line-height: 1.8; color: #ddd;
+}
+.qa-response .response-text .word-highlight {
+  color: var(--oro); font-weight: 600; font-family: var(--font-serif);
+  font-size: 1.2rem;
+}
+.qa-response .response-actions {
+  display: flex; gap: 0.8rem; margin-top: 1.2rem;
+}
+.qa-response .response-actions button {
+  background: rgba(255,255,255,0.05); border: 1px solid var(--borde);
+  color: #aaa; border-radius: 8px; padding: 0.5rem 1rem; cursor: pointer;
+  font-size: 0.8rem; transition: all .2s; display: flex; align-items: center; gap: 0.4rem;
+  font-family: var(--font-sans);
+}
+.qa-response .response-actions button:hover { background: rgba(255,255,255,0.1); color: #fff; }
+.qa-response .response-actions button.speaking { background: rgba(42,157,143,0.2); color: var(--turquesa); border-color: var(--turquesa); }
+.anim-container {
+  width: 100%; height: 120px; margin: 1rem 0; border-radius: 12px;
+  background: rgba(0,0,0,0.2); overflow: hidden; position: relative;
+}
+.anim-scene { width: 100%; height: 100%; position: relative; }
+.anim-saludo .sun { position: absolute; top: 10px; right: 20px; width: 30px; height: 30px; background: var(--oro); border-radius: 50%; animation: sun-pulse 3s infinite; }
+@keyframes sun-pulse { 0%,100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 20px var(--oro); } }
+.anim-saludo .figure { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 2.5rem; animation: figure-wave 2s infinite; }
+@keyframes figure-wave { 0%,100% { transform: translateX(-50%) rotate(0deg); } 25% { transform: translateX(-50%) rotate(-10deg); } 75% { transform: translateX(-50%) rotate(10deg); } }
+.anim-naturaleza { background: linear-gradient(to top, var(--bosque), transparent); }
+.anim-naturaleza .ground { position: absolute; bottom: 0; width: 100%; height: 30%; background: var(--bosque-light); border-radius: 20px 20px 0 0; }
+.anim-naturaleza .tree { position: absolute; bottom: 30%; left: 50%; transform: translateX(-50%); width: 6px; height: 50px; background: #5C4A3A; border-radius: 3px; }
+.anim-naturaleza .tree::after { content: '⚘'; position: absolute; top: -20px; left: -8px; font-size: 1.5rem; }
+.anim-comida .pot { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 2.5rem; animation: cook 3s infinite; }
+@keyframes cook { 0%,100% { transform: translateX(-50%) scale(1); } 50% { transform: translateX(-50%) scale(1.05); } }
+.anim-medicina .plant { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 2rem; animation: grow 4s infinite; }
+@keyframes grow { 0% { transform: translateX(-50%) scale(0.5); opacity: 0.5; } 50% { transform: translateX(-50%) scale(1.2); opacity: 1; } 100% { transform: translateX(-50%) scale(0.5); opacity: 0.5; } }
+.anim-medicina .drop { position: absolute; top: 10px; left: 30%; font-size: 1rem; animation: drop-fall 2s infinite; }
+@keyframes drop-fall { 0% { transform: translateY(-10px); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(80px); opacity: 0; } }
+.anim-arte .pattern-draw { position: absolute; bottom: 20px; left: 10%; width: 80%; height: 40px; background: repeating-linear-gradient(90deg, var(--terracota) 0px, var(--terracota) 6px, transparent 6px, transparent 12px); animation: draw-pattern 3s infinite; }
+@keyframes draw-pattern { 0% { width: 0%; opacity: 0; } 50% { width: 80%; opacity: 1; } 100% { width: 80%; opacity: 1; } }
+.anim-ceremonia .fire { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 2.5rem; animation: fire-dance 1s infinite; }
+@keyframes fire-dance { 0%,100% { transform: translateX(-50%) scale(1) rotate(0deg); } 25% { transform: translateX(-50%) scale(1.05) rotate(-3deg); } 75% { transform: translateX(-50%) scale(0.95) rotate(3deg); } }
+.anim-ceremonia .figures { position: absolute; bottom: 30px; left: 15%; font-size: 1.5rem; animation: circle-dance 6s infinite; }
+@keyframes circle-dance { 0%,100% { transform: translateX(0); } 50% { transform: translateX(50px); } }
+.anim-cosmovision .tree-world { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 2.5rem; animation: tree-pulse 4s infinite; }
+@keyframes tree-pulse { 0%,100% { transform: translateX(-50%) scale(1); } 50% { transform: translateX(-50%) scale(1.1); } }
+.anim-cosmovision .stars { position: absolute; top: 10px; left: 10%; font-size: 0.8rem; animation: twinkle 2s infinite; }
+@keyframes twinkle { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+.explore-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+.explore-card {
+  background: var(--fondo-card); border-radius: var(--radius);
+  border: 1px solid var(--borde); padding: 1.8rem; cursor: pointer;
+  transition: all .3s; text-align: center;
+}
+.explore-card:hover { border-color: var(--terracota); transform: translateY(-4px); }
+.explore-card .icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
+.explore-card h3 { font-family: var(--font-serif); color: #fff; font-size: 1.2rem; margin-bottom: 0.3rem; }
+.explore-card p { color: #888; font-size: 0.85rem; }
+.explore-card .count { margin-top: 0.8rem; font-size: 0.75rem; color: var(--turquesa); font-weight: 600; }
+.pueblos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+.pueblo-card {
+  background: var(--fondo-card); border-radius: var(--radius);
+  border: 1px solid var(--borde); padding: 1.5rem; cursor: pointer;
+  transition: all .3s;
+}
+.pueblo-card:hover { border-color: var(--oro); transform: translateY(-3px); }
+.pueblo-card .name { font-family: var(--font-serif); font-size: 1.3rem; color: var(--oro); }
+.pueblo-card .name-native { color: #666; font-size: 0.85rem; font-style: italic; margin-top: 0.2rem; }
+.pueblo-card .region { font-size: 0.8rem; color: #888; margin-top: 0.5rem; display: flex; align-items: center; gap: 0.3rem; }
+.pueblo-card .speakers { font-size: 0.8rem; color: var(--turquesa); margin-top: 0.3rem; }
+.pueblo-detail {
+  display: none; margin-top: 2rem;
+  background: var(--fondo-card); border-radius: var(--radius);
+  border: 1px solid var(--borde); padding: 2rem;
+  animation: fadeIn 0.4s ease;
+}
+.pueblo-detail.visible { display: block; }
+.pueblo-detail h3 { font-family: var(--font-serif); color: var(--oro); font-size: 1.5rem; }
+.pueblo-detail .back-btn {
+  background: none; border: 1px solid var(--borde); color: #aaa;
+  padding: 0.4rem 1rem; border-radius: 8px; cursor: pointer; font-size: 0.85rem;
+  margin-bottom: 1rem; font-family: var(--font-sans); transition: all .2s;
+}
+.pueblo-detail .back-btn:hover { border-color: var(--turquesa); color: #fff; }
+.glosario-controls { display: flex; gap: 0.8rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.glosario-controls select, .glosario-controls input {
+  background: var(--fondo-card); border: 1px solid var(--borde);
+  color: #fff; padding: 0.6rem 1rem; border-radius: 10px;
+  font-family: var(--font-sans); font-size: 0.9rem;
+}
+.glosario-controls select:focus, .glosario-controls input:focus { border-color: var(--turquesa); outline: none; }
+.glosario-controls input { flex: 1; min-width: 200px; }
+.glosario-controls select { cursor: pointer; }
+.glosario-table { width: 100%; border-collapse: collapse; }
+.glosario-table th {
+  text-align: left; padding: 0.8rem 1rem; font-size: 0.75rem;
+  text-transform: uppercase; letter-spacing: 1px; color: #666;
+  border-bottom: 1px solid var(--borde); font-weight: 600;
+}
+.glosario-table td {
+  padding: 0.7rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.03);
+  font-size: 0.9rem; color: #ccc; cursor: pointer; transition: all .2s;
+}
+.glosario-table tr:hover td { background: rgba(255,255,255,0.03); }
+.glosario-table .word-native { color: var(--oro); font-family: var(--font-serif); font-weight: 600; }
+.voice-indicator {
+  display: none; align-items: center; gap: 0.8rem;
+  padding: 1rem 1.5rem; background: rgba(42,157,143,0.1);
+  border: 1px solid rgba(42,157,143,0.2); border-radius: 12px; margin-top: 1rem;
+  animation: fadeIn 0.3s ease;
+}
+.voice-indicator.active { display: flex; }
+.voice-indicator .wave { display: flex; gap: 3px; align-items: center; }
+.voice-indicator .wave span {
+  width: 4px; height: 16px; background: var(--turquesa); border-radius: 2px;
+  animation: wave 0.8s infinite ease-in-out;
+}
+.voice-indicator .wave span:nth-child(2) { animation-delay: 0.1s; height: 24px; }
+.voice-indicator .wave span:nth-child(3) { animation-delay: 0.2s; height: 12px; }
+.voice-indicator .wave span:nth-child(4) { animation-delay: 0.15s; height: 20px; }
+.voice-indicator .wave span:nth-child(5) { animation-delay: 0.05s; height: 14px; }
+@keyframes wave {
+  0%, 100% { transform: scaleY(0.5); }
+  50% { transform: scaleY(1); }
+}
+.voice-indicator .label { color: var(--turquesa); font-size: 0.85rem; font-weight: 500; }
+.listening-indicator {
+  position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+  display: none; align-items: center; gap: 0.8rem;
+  background: rgba(200,90,50,0.95); color: #fff;
+  padding: 0.8rem 1.5rem; border-radius: 50px;
+  font-size: 0.9rem; font-weight: 500;
+  box-shadow: 0 4px 20px rgba(200,90,50,0.4);
+  animation: fadeInUp 0.3s ease;
+}
+.listening-indicator.active { display: flex; }
+footer {
+  text-align: center; padding: 3rem 2rem;
+  border-top: 1px solid var(--borde);
+  color: #555; font-size: 0.8rem; position: relative; z-index: 1;
+}
+footer .footer-pattern {
+  height: 20px; opacity: 0.08;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 10'%3E%3Cpolygon points='15,0 30,10 0,10' fill='%23C85A32'/%3E%3C/svg%3E") repeat-x;
+  margin-bottom: 1rem;
+}
+footer strong { color: #888; }
+@media (max-width: 768px) {
+  nav { padding: 0.7rem 1rem; }
+  .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; flex-direction: column; background: rgba(15,15,26,0.98); padding: 1rem; gap: 1rem; }
+  .nav-links.open { display: flex; }
+  .nav-toggle { display: block; }
+  .section { padding: 5rem 1rem 2rem; }
+  .qa-input-group { flex-wrap: wrap; padding: 0.8rem; }
+  .qa-input-group input { width: 100%; }
+  .qa-input-group .btn-send { width: 100%; justify-content: center; }
+  .explore-grid { grid-template-columns: 1fr; }
+  .pueblos-grid { grid-template-columns: 1fr; }
+  .glosario-controls { flex-direction: column; }
+  .glosario-table { font-size: 0.8rem; }
+  .listening-indicator { bottom: 1rem; right: 1rem; font-size: 0.8rem; padding: 0.6rem 1rem; }
+}
+@media (max-width: 480px) {
+  .hero h1 { font-size: 2rem; }
+  .btn { padding: 0.7rem 1.2rem; font-size: 0.8rem; }
+}
+  </style>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23C85A32'/%3E%3Ctext x='50' y='65' font-size='40' text-anchor='middle' fill='white'%3E🌿%3C/text%3E%3C/svg%3E" type="image/svg+xml">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" stroke="%23C85A32" stroke-width="2"/><path d="M14 4 L18 12 L14 10 L10 12 Z" fill="%23E9C46A"/><circle cx="14" cy="16" r="4" fill="%232A9D8F"/></svg>
+    Voces de la <span>Tierra</span>
+  </div>
+  <div class="nav-links">
+    <a href="#" data-page="home" class="active">Inicio</a>
+    <a href="#" data-page="preguntar">Preguntar</a>
+    <a href="#" data-page="explorar">Explorar</a>
+    <a href="#" data-page="pueblos">Pueblos</a>
+    <a href="#" data-page="glosario">Glosario</a>
+  </div>
+  <button class="nav-toggle" aria-label="Menú">☰</button>
+</nav>
+
+<!-- HOME -->
+<section class="section active" id="page-home">
+  <div class="hero">
+    <div class="hero-particles" id="particles"></div>
+    <div class="hero-badge">⟡ Patrimonio Vivo de Costa Rica</div>
+    <h1>Voces de la <span class="highlight">Tierra</span></h1>
+    <p class="subtitle">Portal interactivo para aprender y preservar las lenguas, comidas, medicina, arte y cosmovisión de los pueblos indígenas de Costa Rica</p>
+    <div class="phrase-rotator">
+      <span class="phrase-text" style="transition:opacity 0.5s">"La tierra no es herencia de nuestros padres, es préstamo de nuestros hijos"</span>
+    </div>
+    <div class="btn-group">
+      <a href="#" class="btn btn-primary" onclick="window.navigateTo('preguntar');return false;">🎤 Preguntar</a>
+      <a href="#" class="btn btn-secondary" onclick="window.navigateTo('explorar');return false;">🌿 Explorar</a>
+    </div>
+  </div>
+  <div id="home-content"></div>
+  <div class="pattern-divider"></div>
+</section>
+
+<!-- PREGUNTAR -->
+<section class="section" id="page-preguntar">
+  <div class="section-tag">Sabiduría ancestral</div>
+  <h2>Pregunta, te responderá la memoria</h2>
+  <p class="section-desc">Habla o escribe tu pregunta sobre lenguas, comidas, medicina, arte o cultura indígena. La voz de los abuelos te responderá.</p>
+
+  <div class="qa-container">
+    <div class="qa-input-group">
+      <input type="text" id="qa-input" placeholder='Ej: "¿cómo se dice hola en bribri?" o "¿qué es el Juego de los Diablitos?"' autocomplete="off">
+      <button class="btn-voice" id="qa-voice" title="Preguntar por voz">🎤</button>
+      <button class="btn-send" id="qa-send">Preguntar →</button>
+    </div>
+
+    <div class="voice-indicator" id="voice-indicator">
+      <div class="wave"><span></span><span></span><span></span><span></span><span></span></div>
+      <span class="label">Escuchando...</span>
+    </div>
+
+    <div class="qa-suggestions" id="qa-suggestions"></div>
+
+    <div class="qa-response" id="qa-response">
+      <div class="response-card">
+        <div class="response-category">Sabiduría</div>
+        <div class="response-text">Pregunta algo y te compartiré el conocimiento de los pueblos indígenas de Costa Rica.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPLORAR -->
+<section class="section" id="page-explorar">
+  <div class="section-tag">Conocimiento</div>
+  <h2>Explora la sabiduría indígena</h2>
+  <p class="section-desc">Selecciona una categoría para descubrir las tradiciones y conocimientos de los pueblos originarios.</p>
+  <div class="explore-grid" id="explore-grid"></div>
+</section>
+
+<!-- PUEBLOS -->
+<section class="section" id="page-pueblos">
+  <div class="section-tag">Pueblos indígenas</div>
+  <h2>Los 7 pueblos de Costa Rica</h2>
+  <p class="section-desc">Cada pueblo tiene su propia lengua, cosmovisión y tradiciones. Todos pertenecen a la gran familia Chibcha.</p>
+  <div class="pueblos-grid" id="pueblos-grid"></div>
+  <div class="pueblo-detail" id="pueblo-detail"></div>
+</section>
+
+<!-- GLOSARIO -->
+<section class="section" id="page-glosario">
+  <div class="section-tag">Vocabulario</div>
+  <h2>Glosario de lenguas indígenas</h2>
+  <p class="section-desc">Busca palabras en las 7 lenguas indígenas de Costa Rica con su traducción al español y pronunciación.</p>
+
+  <div class="glosario-controls">
+    <select id="glosario-lang"></select>
+    <select id="glosario-cat"></select>
+    <input type="text" id="glosario-search" placeholder="Buscar palabra...">
+  </div>
+
+  <table class="glosario-table">
+    <thead><tr><th>Lengua indígena</th><th>Español</th><th>Pronunciación</th><th>Pueblo</th></tr></thead>
+    <tbody id="glosario-body"></tbody>
+  </table>
+</section>
+
+<!-- LISTENING INDICATOR (fixed) -->
+<div class="listening-indicator" id="listening-indicator">🎤 Escuchando...</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-pattern"></div>
+  <p><strong>Voces de la Tierra</strong> — Proyecto de preservación cultural · Costa Rica 2026</p>
+  <p style="margin-top:0.3rem;font-size:0.75rem;">Datos basados en fuentes académicas y comunitarias. Cada palabra es un acto de resistencia cultural.</p>
+</footer>
+
+<script>
+const VOCES = {
+
+  meta: {
+    title: "Voces de la Tierra",
+    subtitle: "Portal de lenguas y culturas indígenas de Costa Rica",
+    version: "1.0.0",
+    languages: ["bribri", "cabecar", "ngabe", "maleku", "boruca", "terraba", "huetar"]
+  },
+
+  languages: {
+    bribri: {
+      name: "Bribri",
+      nameNative: "Bribri",
+      region: "Talamanca, Caribe Sur",
+      family: "Chibcha",
+      speakers: 7000,
+      description: "El bribri es una de las lenguas indígenas más vitales de Costa Rica. Su cosmovisión gira en torno a Sibú, el dios creador, y la figura del awá (médico tradicional).",
+      greeting: "di' tte",
+      words: {
+        saludos: [
+          { es: "Hola", native: "di' tte", pron: "di tte", nota: "Saludo informal y cotidiano" },
+          { es: "Buenos días", native: "di' tte stsö", pron: "di tte stsö", nota: "Saludo matutino" },
+          { es: "Buenas tardes", native: "di' tte wé ká", pron: "di tte ué ka", nota: "Saludo vespertino" },
+          { es: "Adiós", native: "déwö", pron: "déuö", nota: "Despedida general" },
+          { es: "Hasta luego", native: "déwö ká", pron: "déuö ka", nota: "Despedida con intención de regreso" },
+          { es: "Gracias", native: "díshkö", pron: "dishkö", nota: "Expresión de agradecimiento" },
+          { es: "¿Cómo estás?", native: "bí tó?", pron: "bi to", nota: "Pregunta de cortesía" }
+        ],
+        numeros: [
+          { es: "Uno", native: "éke", pron: "eke", nota: "Número uno" },
+          { es: "Dos", native: "bök", pron: "bök", nota: "Número dos" },
+          { es: "Tres", native: "màyan", pron: "mayan", nota: "Número tres" },
+          { es: "Cuatro", native: "tchög", pron: "chög", nota: "Número cuatro" },
+          { es: "Cinco", native: "skèr", pron: "sker", nota: "Número cinco" }
+        ],
+        naturaleza: [
+          { es: "Agua", native: "dí", pron: "di", nota: "Elemento sagrado, fuente de vida" },
+          { es: "Sol", native: "dö", pron: "dö", nota: "Astro rey, dador de luz" },
+          { es: "Luna", native: "sĩã", pron: "siã", nota: "Madre luna, guía nocturna" },
+          { es: "Tierra", native: "míkë", pron: "mikë", nota: "La tierra, nuestro hogar" },
+          { es: "Río", native: "dí' ká", pron: "di ka", nota: "Los ríos son venas de la tierra" },
+          { es: "Montaña", native: "tsáwö", pron: "tsáwö", nota: "Las montañas sagradas" },
+          { es: "Árbol", native: "kás", pron: "kas", nota: "Los árboles son nuestros hermanos" },
+          { es: "Maíz", native: "kókó", pron: "koko", nota: "El maíz es vida y sustento" },
+          { es: "Cacao", native: "kakáu", pron: "kakau", nota: "El cacao es sagrado, conecta con Sibú" },
+          { es: "Fuego", native: "chichá", pron: "chicha", nota: "El fuego purifica y transforma" }
+        ],
+        familia: [
+          { es: "Madre", native: "kã", pron: "kã", nota: "Madre tierra, madre biológica" },
+          { es: "Padre", native: "ák", pron: "ak", nota: "Padre, protector" },
+          { es: "Hermano", native: "bá", pron: "ba", nota: "Hermano de sangre" },
+          { es: "Hermana", native: "bá' kã", pron: "ba kã", nota: "Hermana de sangre" },
+          { es: "Hijo", native: "tsí", pron: "tsi", nota: "Hijo o hija" },
+          { es: "Abuelo", native: "dörö", pron: "dörö", nota: "Abuelo, sabio anciano" },
+          { es: "Abuela", native: "dörö' kã", pron: "dörö kã", nota: "Abuela, guardiana de historias" },
+          { es: "Familia", native: "alák", pron: "alak", nota: "La familia extendida bribri" }
+        ],
+        cotidianas: [
+          { es: "Sí", native: "è", pron: "e", nota: "Afirmación" },
+          { es: "No", native: "kë", pron: "kë", nota: "Negación" },
+          { es: "Bien", native: "bí", pron: "bi", nota: "Estado de bienestar" },
+          { es: "Casa", native: "ú", pron: "u", nota: "El hogar" },
+          { es: "Comida", native: "kó", pron: "ko", nota: "Alimento" },
+          { es: "Amigo", native: "bà' tchí", pron: "ba tchi", nota: "Amistad sincera" },
+          { es: "Camino", native: "yá", pron: "ya", nota: "Sendero, ruta" }
+        ]
+      },
+      cultura: {
+        cosmovision: "Los bribri creen que el mundo fue creado por Sibú. La tierra descansa sobre una culebra gigante. Los awá (médicos tradicionales) son los intermediarios entre el mundo espiritual y el físico.",
+        tradiciones: [
+          "El awá o médico tradicional bribri usa el cacao y plantas sagradas para sanar",
+          "El rito fúnebre bribri incluye la creencia de que el alma viaja al otro mundo",
+          "La organización social se basa en clanes matrilineales",
+          "La palabra hablada tiene un poder sagrado - no se debe mentir jamás"
+        ]
+      }
+    },
+    cabecar: {
+      name: "Cabécar",
+      nameNative: "Cabécar",
+      region: "Talamanca, Chirripó",
+      family: "Chibcha",
+      speakers: 3000,
+      description: "El cabécar está estrechamente relacionado con el bribri. Son un pueblo que ha preservado fuertemente su identidad y territorio en las montañas de Talamanca.",
+      greeting: "ji' tte",
+      words: {
+        saludos: [
+          { es: "Hola", native: "ji' tte", pron: "yi tte", nota: "Saludo cotidiano" },
+          { es: "Buenos días", native: "ji' tte shö", pron: "yi tte shö", nota: "Saludo de día" },
+          { es: "Adiós", native: "jé'wö", pron: "yéuö", nota: "Despedida" },
+          { es: "Gracias", native: "jìshkö", pron: "yishkö", nota: "Agradecimiento" },
+          { es: "¿Cómo estás?", native: "bi' jí?", pron: "bi yi", nota: "Saludo cordial" }
+        ],
+        numeros: [
+          { es: "Uno", native: "éke", pron: "eke", nota: "Primer número" },
+          { es: "Dos", native: "bök", pron: "bök", nota: "Segundo número" },
+          { es: "Tres", native: "máyan", pron: "mayan", nota: "Tercer número" },
+          { es: "Cuatro", native: "shkiög", pron: "skiög", nota: "Cuarto número" },
+          { es: "Cinco", native: "shker", pron: "sker", nota: "Quinto número" }
+        ],
+        naturaleza: [
+          { es: "Agua", native: "dí", pron: "di", nota: "Agua, fuente de vida" },
+          { es: "Sol", native: "dö", pron: "dö", nota: "El astro solar" },
+          { es: "Luna", native: "siã", pron: "siã", nota: "La luna" },
+          { es: "Río", native: "dí' ká", pron: "di ka", nota: "Curso de agua" },
+          { es: "Maíz", native: "kókó", pron: "koko", nota: "El maíz sagrado" }
+        ],
+        cotidianas: [
+          { es: "Casa", native: "jú", pron: "yu", nota: "Hogar cabécar" },
+          { es: "Sí", native: "è", pron: "e", nota: "Afirmación" },
+          { es: "No", native: "kë'", pron: "kë", nota: "Negación" }
+        ]
+      },
+      cultura: {
+        cosmovision: "La cosmovisión cabécar es similar a la bribri. Sibú es el creador. Creen en espíritus de la naturaleza que habitan ríos, montañas y árboles.",
+        tradiciones: [
+          "Los cabécares son conocidos por su profundo conocimiento de plantas medicinales",
+          "La cacería y la recolección son actividades tradicionales importantes",
+          "La vivienda tradicional es de forma cónica con techo de paja",
+          "El clan se hereda por línea materna"
+        ]
+      }
+    },
+    ngabe: {
+      name: "Ngäbe",
+      nameNative: "Ngäbe",
+      region: "Puntarenas Sur, Coto Brus, Buenos Aires",
+      family: "Chibcha",
+      speakers: 5000,
+      description: "Los ngäbe (también llamados guaymíes) habitan en el sur de Costa Rica y norte de Panamá. Su lengua es el ngäbere. Son conocidos por sus coloridos vestidos tradicionales y su arte en chaquira.",
+      greeting: "möi",
+      words: {
+        saludos: [
+          { es: "Hola", native: "möi", pron: "möi", nota: "Saludo principal" },
+          { es: "Buenos días", native: "möi mrä", pron: "möi mrä", nota: "Saludo de día" },
+          { es: "Buenas tardes", native: "möi nämä", pron: "möi nämä", nota: "Saludo de tarde" },
+          { es: "Adiós", native: "möi n'gö", pron: "möi ngö", nota: "Despedida" },
+          { es: "Gracias", native: "möi nuge", pron: "möi nuge", nota: "Agradecimiento" },
+          { es: "¿Cómo estás?", native: "möi drebä?", pron: "möi drebä", nota: "Pregunta de cortesía" }
+        ],
+        numeros: [
+          { es: "Uno", native: "dai", pron: "dai", nota: "Número uno" },
+          { es: "Dos", native: "dok", pron: "dok", nota: "Número dos" },
+          { es: "Tres", native: "dai", pron: "dai", nota: "Número tres" },
+          { es: "Cuatro", native: "bokai", pron: "bokai", nota: "Número cuatro" },
+          { es: "Cinco", native: "dai mäi", pron: "dai mäi", nota: "Número cinco" }
+        ],
+        naturaleza: [
+          { es: "Agua", native: "ñö", pron: "ñö", nota: "Agua, elemento vital" },
+          { es: "Sol", native: "ngö", pron: "ngö", nota: "El sol" },
+          { es: "Luna", native: "nä", pron: "nä", nota: "La luna" },
+          { es: "Tierra", native: "dö", pron: "dö", nota: "La tierra" },
+          { es: "Río", native: "drie", pron: "drie", nota: "Río" },
+          { es: "Montaña", native: "köba", pron: "köba", nota: "Cerro o montaña" },
+          { es: "Árbol", native: "nö", pron: "nö", nota: "Árbol, bosque" },
+          { es: "Mar", native: "ñö käme", pron: "ñö käme", nota: "Mar, agua grande" },
+          { es: "Estrella", native: "kube", pron: "kube", nota: "Estrella del cielo" }
+        ],
+        familia: [
+          { es: "Madre", native: "mama", pron: "mama", nota: "Madre" },
+          { es: "Padre", native: "tata", pron: "tata", nota: "Padre" },
+          { es: "Hermano", native: "kri", pron: "kri", nota: "Hermano" },
+          { es: "Hermana", native: "kre", pron: "kre", nota: "Hermana" },
+          { es: "Hijo", native: "mre", pron: "mre", nota: "Hijo" },
+          { es: "Abuelo", native: "ngöbo", pron: "ngöbo", nota: "Abuelo" }
+        ],
+        cotidianas: [
+          { es: "Sí", native: "e", pron: "e", nota: "Afirmación" },
+          { es: "No", native: "tai", pron: "tai", nota: "Negación" },
+          { es: "Casa", native: "köde", pron: "köde", nota: "Vivienda tradicional" },
+          { es: "Comida", native: "nügä", pron: "nügä", nota: "Alimento" },
+          { es: "Amigo", native: "mdigwe", pron: "mdigüe", nota: "Amigo cercano" },
+          { es: "Flor", native: "sege", pron: "sege", nota: "Flor" }
+        ]
+      },
+      cultura: {
+        cosmovision: "Para los ngäbe, la tierra es la madre de todos. Creen en Ngöbö, el dios creador que todo lo ve. La naturaleza es sagrada y debe ser respetada.",
+        tradiciones: [
+          "Las mujeres ngäbe usan vestidos de colores brillantes llamados 'nawar'",
+          "El arte en chaquira (abalorios) es una tradición milenaria",
+          "La música tradicional usa la flauta de caña y el tambor",
+          "Los ngäbe migran estacionalmente siguiendo los ciclos de la naturaleza"
+        ]
+      }
+    },
+    maleku: {
+      name: "Maleku",
+      nameNative: "Maleku",
+      region: "Guatuso, Alajuela Norte",
+      family: "Chibcha",
+      speakers: 1000,
+      description: "Los malekus o guatusos habitan en la región norte de Costa Rica. Su lengua es una de las más amenazadas del país. Son conocidos por su artesanía en jícaras y sus tradiciones de caza.",
+      greeting: "rahíj",
+      words: {
+        saludos: [
+          { es: "Hola", native: "rahíj", pron: "rahíj", nota: "Saludo principal" },
+          { es: "Buenos días", native: "rahíj tí", pron: "rahíj ti", nota: "Saludo de día" },
+          { es: "Adiós", native: "rahíj rah", pron: "rahíj rah", nota: "Despedida" },
+          { es: "Gracias", native: "rahíj ka", pron: "rahíj ka", nota: "Agradecimiento" }
+        ],
+        numeros: [
+          { es: "Uno", native: "kí", pron: "ki", nota: "Número uno" },
+          { es: "Dos", native: "páo", pron: "pao", nota: "Número dos" },
+          { es: "Tres", native: "páotkí", pron: "paotki", nota: "Número tres" },
+          { es: "Cuatro", native: "paobáo", pron: "paobao", nota: "Número cuatro" },
+          { es: "Cinco", native: "kí jó", pron: "ki yo", nota: "Número cinco" }
+        ],
+        naturaleza: [
+          { es: "Agua", native: "túi", pron: "tui", nota: "Agua" },
+          { es: "Sol", native: "jí", pron: "yi", nota: "El sol" },
+          { es: "Luna", native: "kína", pron: "kina", nota: "La luna" },
+          { es: "Río", native: "túi ká", pron: "tui ka", nota: "Río" },
+          { es: "Árbol", native: "jaká", pron: "yaka", nota: "Árbol" },
+          { es: "Maíz", native: "ópe", pron: "ope", nota: "El maíz" }
+        ],
+        familia: [
+          { es: "Madre", native: "máma", pron: "mama", nota: "Madre" },
+          { es: "Padre", native: "pápa", pron: "papa", nota: "Padre" },
+          { es: "Hermano", native: "chá", pron: "cha", nota: "Hermano" },
+          { es: "Hijo", native: "chíri", pron: "chiri", nota: "Hijo" }
+        ],
+        cotidianas: [
+          { es: "Casa", native: "jó", pron: "yo", nota: "Hogar tradicional" },
+          { es: "Sí", native: "hó", pron: "ho", nota: "Afirmación" },
+          { es: "No", native: "má", pron: "ma", nota: "Negación" },
+          { es: "Comida", native: "jé", pron: "ye", nota: "Alimento" }
+        ]
+      },
+      cultura: {
+        cosmovision: "Los maleku creen en espíritus de la naturaleza. El jaguar es un animal sagrado y protector. Los ríos y lagunas son morada de espíritus ancestrales.",
+        tradiciones: [
+          "La cestería y la talla de jícaras son artes tradicionales maleku",
+          "La caza con cerbatana era una práctica tradicional",
+          "Las casas tradicionales eran grandes estructuras comunales",
+          "El baile del jaguar representa la conexión con el espíritu animal"
+        ]
+      }
+    },
+    boruca: {
+      name: "Boruca",
+      nameNative: "Brúnka",
+      region: "Puntarenas Sur, Boruca, Térraba",
+      family: "Chibcha",
+      speakers: 150,
+      description: "La lengua boruca está críticamente amenazada. Sin embargo, el pueblo boruca mantiene vivas sus tradiciones culturales, especialmente el famoso 'Juego de los Diablitos' y su arte textil.",
+      greeting: "tésh",
+      words: {
+        saludos: [
+          { es: "Hola", native: "tésh", pron: "tesh", nota: "Saludo tradicional" },
+          { es: "Buenos días", native: "tésh kra", pron: "tesh kra", nota: "Saludo de día" },
+          { es: "Adiós", native: "tésh kwé", pron: "tesh kwé", nota: "Despedida" },
+          { es: "Gracias", native: "tésh tká", pron: "tesh tká", nota: "Agradecimiento" }
+        ],
+        numeros: [
+          { es: "Uno", native: "tká", pron: "tka", nota: "Número uno" },
+          { es: "Dos", native: "bú", pron: "bu", nota: "Número dos" },
+          { es: "Tres", native: "mán", pron: "man", nota: "Número tres" },
+          { es: "Cuatro", native: "bká", pron: "bka", nota: "Número cuatro" },
+          { es: "Cinco", native: "mánik", pron: "manik", nota: "Número cinco" }
+        ],
+        naturaleza: [
+          { es: "Agua", native: "tkó", pron: "tko", nota: "Agua" },
+          { es: "Sol", native: "krá", pron: "kra", nota: "El sol" },
+          { es: "Luna", native: "kúbo", pron: "kubo", nota: "La luna" },
+          { es: "Tierra", native: "té", pron: "te", nota: "La tierra" },
+          { es: "Río", native: "tkó'ká", pron: "tko ka", nota: "Río" },
+          { es: "Maíz", native: "yís", pron: "yis", nota: "El maíz sagrado" }
+        ],
+        cotidianas: [
+          { es: "Casa", native: "kísh", pron: "kish", nota: "Hogar" },
+          { es: "Sí", native: "té", pron: "te", nota: "Afirmación" },
+          { es: "No", native: "té'kwá", pron: "tékwa", nota: "Negación" },
+          { es: "Comida", native: "tkóri", pron: "tkori", nota: "Alimento" }
+        ]
+      },
+      cultura: {
+        cosmovision: "La cosmovisión boruca incluye la creencia en espíritus ancestrales que protegen la comunidad. El río y la montaña son elementos sagrados en su geografía espiritual.",
+        tradiciones: [
+          "El Juego de los Diablitos es la tradición más conocida: representa la resistencia indígena contra los españoles",
+          "El tejido de fibras naturales (chácaras) es un arte tradicional",
+          "La máscara de diablito es un símbolo cultural hecho de cedro",
+          "La fiesta se celebra cada diciembre y enero"
+        ]
+      }
+    },
+    terraba: {
+      name: "Térraba",
+      nameNative: "Surétk",
+      region: "Puntarenas Sur, Térraba",
+      family: "Chibcha",
+      speakers: 30,
+      description: "La lengua térraba está en peligro crítico de extinción. El pueblo térraba está realizando esfuerzos de revitalización lingüística y cultural.",
+      greeting: "tésh",
+      words: {
+        saludos: [
+          { es: "Hola", native: "tésh", pron: "tesh", nota: "Saludo principal" },
+          { es: "Buenos días", native: "tésh ará", pron: "tesh ara", nota: "Saludo de día" },
+          { es: "Adiós", native: "tésh uré", pron: "tesh ure", nota: "Despedida" },
+          { es: "Gracias", native: "tésh be", pron: "tesh be", nota: "Agradecimiento" }
+        ],
+        numeros: [
+          { es: "Uno", native: "é", pron: "e", nota: "Número uno" },
+          { es: "Dos", native: "bú", pron: "bu", nota: "Número dos" },
+          { es: "Tres", native: "má", pron: "ma", nota: "Número tres" },
+          { es: "Cuatro", native: "bká", pron: "bka", nota: "Número cuatro" },
+          { es: "Cinco", native: "másk", pron: "mask", nota: "Número cinco" }
+        ],
+        naturaleza: [
+          { es: "Agua", native: "tkó", pron: "tko", nota: "Agua" },
+          { es: "Sol", native: "ará", pron: "ara", nota: "El sol" },
+          { es: "Luna", native: "kúb", pron: "kub", nota: "La luna" },
+          { es: "Río", native: "tkórk", pron: "tkork", nota: "Río" }
+        ],
+        cotidianas: [
+          { es: "Casa", native: "ú", pron: "u", nota: "Hogar" },
+          { es: "Sí", native: "é", pron: "e", nota: "Afirmación" },
+          { es: "No", native: "má", pron: "ma", nota: "Negación" }
+        ]
+      },
+      cultura: {
+        cosmovision: "La cosmovisión térraba comparte raíces con la boruca. La tradición oral es fundamental para preservar su memoria colectiva.",
+        tradiciones: [
+          "El pueblo térraba ha resistido el desplazamiento de sus territorios ancestrales",
+          "La revitalización lingüística es una prioridad para las nuevas generaciones",
+          "La pesca y la agricultura han sido actividades tradicionales",
+          "Las historias de los abuelos son el tesoro cultural más importante"
+        ]
+      }
+    },
+    huetar: {
+      name: "Huetar",
+      nameNative: "Huetar",
+      region: "Valle Central, Pacífico Central",
+      family: "Chibcha",
+      speakers: 0,
+      description: "La lengua huetar está extinta. Fue la lengua del Valle Central a la llegada de los españoles. El cacique Garabito fue el gobernante huetar más conocido. Hoy, el pueblo huetar trabaja en la recuperación de su memoria cultural.",
+      greeting: "—",
+      words: {
+        saludos: [
+          { es: "Hola", native: "—", pron: "", nota: "No se conserva registro de saludos en huetar" },
+          { es: "Gracias", native: "—", pron: "", nota: "No se conserva registro" }
+        ],
+        cultura_historica: [
+          { es: "Cacique Garabito", native: "", pron: "", nota: "Famoso cacique huetar que resistió la conquista española" },
+          { es: "Cacique Coyoche", native: "", pron: "", nota: "Cacique huetar del Pacífico Central" },
+          { es: "Pacaca", native: "", pron: "", nota: "Importante asentamiento huetar" }
+        ]
+      },
+      cultura: {
+        cosmovision: "Aunque la lengua está extinta, los descendientes huetares mantienen viva la memoria de sus ancestros y trabajan en la recuperación de su identidad cultural.",
+        tradiciones: [
+          "Los huetares construyeron montículos ceremoniales y petroglifos",
+          "Eran agricultores del maíz, frijol y cacao",
+          "La cerámica huetar tenía diseños geométricos característicos",
+          "Actualmente hay un proceso de revitalización del pueblo huetar"
+        ]
+      }
+    }
+  },
+
+  foods: {
+    bribri: {
+      dishes: [
+        { name: "Sopa de Ayote", desc: "Calabaza criolla cocida con verduras y hierbas", significance: "Plato tradicional en época de cosecha" },
+        { name: "Cacao bribri", desc: "Bebida ceremonial de cacao natural molido", significance: "Usado en ceremonias espirituales por el awá" },
+        { name: "Chicha de maíz", desc: "Bebida fermentada de maíz", significance: "Bebida ceremonial y de celebración comunitaria" },
+        { name: "Pejibaye", desc: "Fruta de la palma de pejibaye cocida con sal", significance: "Alimento tradicional de la dieta bribri" }
+      ],
+      ingredients: ["Maíz", "Cacao", "Ayote", "Pejibaye", "Yuca", "Plátano", "Verdura de monte", "Pescado de río"]
+    },
+    cabecar: {
+      dishes: [
+        { name: "Bollo de maíz", desc: "Masa de maíz envuelta en hojas y cocida al vapor", significance: "Alimento cotidiano cabécar" },
+        { name: "Pescado ahumado", desc: "Pescado de río preparado con humo", significance: "Técnica tradicional de conservación" },
+        { name: "Chicha cabécar", desc: "Bebida fermentada de maíz o frutas", significance: "Bebida de celebraciones" }
+      ],
+      ingredients: ["Maíz", "Pescado", "Ayote", "Yuca", "Plátano", "Chiles"]
+    },
+    ngabe: {
+      dishes: [
+        { name: "Bollo de maíz ngäbe", desc: "Masa de maíz envuelta en hojas", significance: "Alimento básico tradicional" },
+        { name: "Pescado con plátano", desc: "Pescado cocido con plátano verde", significance: "Comida cotidiana" },
+        { name: "Chicha ngäbe", desc: "Bebida de maíz fermentado", significance: "Bebida ceremonial" }
+      ],
+      ingredients: ["Maíz", "Plátano", "Pescado", "Cacao", "Yuca", "Chontaduro"]
+    },
+    maleku: {
+      dishes: [
+        { name: "Arroz de monte", desc: "Arroz con verduras y carne de cacería", significance: "Plato tradicional maleku" },
+        { name: "Chicha maleku", desc: "Bebida fermentada de maíz", significance: "Uso ceremonial" }
+      ],
+      ingredients: ["Maíz", "Carne de monte", "Yuca", "Plátano", "Pejibaye"]
+    },
+    boruca: {
+      dishes: [
+        { name: "Bollo boruca", desc: "Masa de maíz rellena envuelta en hojas", significance: "Comida tradicional de celebraciones" },
+        { name: "Chicha boruca", desc: "Bebida de maíz fermentado", significance: "Bebida del Juego de los Diablitos" },
+        { name: "Sopa de maíz", desc: "Sopa espesa de maíz con verduras", significance: "Alimento de la comunidad" }
+      ],
+      ingredients: ["Maíz", "Frijol", "Ayote", "Yuca", "Chiles"]
+    },
+    general: {
+      traditional_ingredients: [
+        { name: "Maíz", native: "kókó / isk", desc: "Base de la alimentación indígena", uso: "Tortillas, bollos, chicha, atol" },
+        { name: "Cacao", native: "kakáu", desc: "Fruta sagrada, usado ceremonialmente", uso: "Bebida ceremonial, chocolate" },
+        { name: "Pejibaye", native: "—", desc: "Fruta de la palma, hervida con sal", uso: "Acompañante de comidas" },
+        { name: "Ayote", native: "—", desc: "Calabaza de la región", uso: "Sopas, hervidos" },
+        { name: "Yuca", native: "—", desc: "Raíz de alto valor nutricional", uso: "Hervida, frita, en sopas" },
+        { name: "Chontaduro", native: "—", desc: "Fruta de la palma roja o amarilla", uso: "Hervido, miel" },
+        { name: "Pescado de río", native: "—", desc: "Pescado fresco de ríos de Talamanca", uso: "Ahumado, hervido, sopa" },
+        { name: "Frijol", native: "—", desc: "Frijol criollo de distintas variedades", uso: "Sopas, acompañante" },
+        { name: "Plátano", native: "—", desc: "Plátano verde o maduro", uso: "Hervido, asado, frito" }
+      ]
+    }
+  },
+
+  medicine: {
+    plants: [
+      { name: "Jengibre", native: "—", scientific: "Zingiber officinale", pueblo: "Todos", uso: "Antiinflamatorio, digestivo, resfriados", preparacion: "Rallado en infusión o compresa" },
+      { name: "Sángrillo", native: "—", scientific: "—", pueblo: "Bribri", uso: "Cicatrizante natural, para heridas", preparacion: "Hervir hojas y aplicar en la herida" },
+      { name: "Guarumo", native: "—", scientific: "Cecropia peltata", pueblo: "Bribri, Cabécar", uso: "Para diabetes, presión arterial, tos", preparacion: "Hojas en infusión" },
+      { name: "Dormilona", native: "—", scientific: "Mimosa pudica", pueblo: "Bribri", uso: "Para insomnio, nervios, dolor de cabeza", preparacion: "Infusión de hojas antes de dormir" },
+      { name: "Zacate limón", native: "—", scientific: "Cymbopogon citratus", pueblo: "Todos", uso: "Digestivo, calmante, resfriados", preparacion: "Hojas en infusión" },
+      { name: "Saúco", native: "—", scientific: "Sambucus mexicana", pueblo: "Todos", uso: "Fiebre, tos, gripes", preparacion: " Flores y hojas en infusión" },
+      { name: "Cola de caballo", native: "—", scientific: "Equisetum", pueblo: "Ngäbe", uso: "Diurético, limpieza renal", preparacion: "Tallos en infusión" },
+      { name: "Ayote", native: "—", scientific: "Cucurbita moschata", pueblo: "Todos", uso: "Semilla antiparasitaria, pulpa nutritiva", preparacion: "Semillas secas molidas con agua" },
+      { name: "Miel de abeja", native: "—", scientific: "—", pueblo: "Todos", uso: "Antibiótico natural, energía, heridas", preparacion: "Directa o en infusiones" },
+      { name: "Ajo", native: "—", scientific: "Allium sativum", pueblo: "Todos", uso: "Antibiótico natural, circulación", preparacion: "Directo o en infusiones" }
+    ],
+    practices: [
+      { name: "Soba de huesos", desc: "Técnica de masaje tradicional para tratar fracturas y luxaciones", pueblo: "Bribri, Cabécar", practitioner: "Awá (médico tradicional)" },
+      { name: "Baño de vapor", desc: "Baño con hierbas calentadas al fuego para purificar el cuerpo", pueblo: "Ngäbe", practitioner: "Curandero tradicional" },
+      { name: "Ceremonia del cacao", desc: "Ritual de sanación espiritual usando cacao sagrado", pueblo: "Bribri", practitioner: "Awá" },
+      { name: "Soplo de tabaco", desc: "Uso ceremonial del tabaco para limpiar energías negativas", pueblo: "Bribri, Cabécar", practitioner: "Awá" },
+      { name: "Ventosa", desc: "Técnica de succión con recipiente caliente para extraer malas energías", pueblo: "Todos", practitioner: "Médico tradicional" }
+    ],
+    conceptos: [
+      { es: "Médico tradicional", native: "Awá (Bribri, Cabécar)" },
+      { es: "Planta medicinal", native: "Sé' (Bribri)" },
+      { es: "Energía espiritual", native: "Chichá (Bribri)" }
+    ]
+  },
+
+  art: {
+    techniques: [
+      { name: "Teñido natural", desc: "Uso de plantas nativas para teñir fibras", pueblo: "Boruca, Ngäbe", colors: "Achiote (rojo), Jagua (azul/negro), Cúrcuma (amarillo)" },
+      { name: "Cestería", desc: "Tejido de fibras vegetales para canastos y utensilios", pueblo: "Maleku, Bribri", materials: "Bejuco, caña brava, palma" },
+      { name: "Talla de jícaras", desc: "Tallado decorativo en frutos de jícara", pueblo: "Maleku, Boruca", materials: "Jícara (crescentia cujete)" },
+      { name: "Tejido en chaquira", desc: "Arte de abalorios con diseños geométricos y animales", pueblo: "Ngäbe", materials: "Chaquiras de colores, hilo" },
+      { name: "Máscara de diablito", desc: "Máscara de madera tallada para el Juego de los Diablitos", pueblo: "Boruca", materials: "Madera de cedro, pintura natural" },
+      { name: "Cerámica", desc: "Vasijas y utensilios de barro decorados", pueblo: "Huetar (histórico)", materials: "Barro, pintura mineral" },
+      { name: "Petroglifos", desc: "Grabados en piedra con figuras geométricas y animales", pueblo: "Huetar (histórico)", materials: "Piedra volcánica" },
+      { name: "Textil tradicional", desc: "Tejido de algodón con figuras tradicionales", pueblo: "Boruca, Ngäbe", materials: "Algodón, fibras naturales, tintes" }
+    ],
+    symbols: [
+      { figure: "Espiral", meaning: "El camino de la vida, el viaje espiritual", pueblo: "Bribri, Cabécar" },
+      { figure: "Jaguar", meaning: "Fuerza, poder espiritual, protector", pueblo: "Todos" },
+      { figure: "Árbol del mundo", meaning: "Conexión entre cielo, tierra e inframundo", pueblo: "Bribri" },
+      { figure: "Serpiente", meaning: "Sabiduría, renovación, la tierra misma", pueblo: "Bribri, Maleku" },
+      { figure: "Ave", meaning: "Mensajera entre mundos, libertad del espíritu", pueblo: "Todos" },
+      { figure: "Doble espiral", meaning: "Equilibrio y dualidad de la existencia", pueblo: "Huetar (petroglifos)" },
+      { figure: "Cacao", meaning: "Corazón de la tierra, conexión divina", pueblo: "Bribri" }
+    ]
+  },
+
+  culture: {
+    cosmovision: [
+      { topic: "Sibú y la creación", desc: "Sibú es el dios creador en la cosmovisión bribri y cabécar. Según la tradición, Sibú sembró las semillas del mundo en el pecho de la tierra y de ellas brotaron todos los seres.", pueblo: "Bribri, Cabécar" },
+      { topic: "Los Clanes", desc: "La sociedad bribri se organiza en clanes matrilineales (por línea materna). Cada clan tiene un animal o elemento natural como tótem.", pueblo: "Bribri" },
+      { topic: "El Awá", desc: "El médico tradicional que puede comunicarse con el mundo espiritual. Usa plantas sagradas, cacao y cantos para sanar.", pueblo: "Bribri, Cabécar" },
+      { topic: "El Juego de los Diablitos", desc: "Fiesta tradicional boruca que representa la resistencia del pueblo indígena contra los conquistadores españoles. Los 'diablitos' (participantes disfrazados) vencen al 'toro' (el español).", pueblo: "Boruca" },
+      { topic: "Ngöbö y la naturaleza", desc: "Para los ngäbe, Ngöbö es el creador que todo lo ve. La naturaleza es su manifestación: cada río, montaña y animal tiene un espíritu.", pueblo: "Ngäbe" },
+      { topic: "El jaguar protector", desc: "En la cultura maleku, el jaguar es un animal sagrado, guardián de los secretos de la selva y protector de la comunidad.", pueblo: "Maleku" },
+      { topic: "Garabito, el gran cacique", desc: "Cacique huetar que lideró la resistencia contra los conquistadores españoles en el Valle Central. Su astucia y valentía son recordadas.", pueblo: "Huetar" },
+      { topic: "Ceremonias del cacao", desc: "El cacao no es solo alimento: es un vehículo espiritual. Las ceremonias de cacao bribri conectan a los participantes con el mundo espiritual.", pueblo: "Bribri" }
+    ],
+    ceremonies: [
+      { name: "Juego de los Diablitos", when: "Diciembre - Enero", desc: "Fiesta de tres días donde los borucas representan la lucha entre indígenas (diablitos) y españoles (toro)", pueblo: "Boruca" },
+      { name: "Ceremonia del Cacao", when: "Según el awá", desc: "Ritual de sanación y conexión espiritual usando cacao ceremonial", pueblo: "Bribri" },
+      { name: "Rito fúnebre bribri", when: "Tras fallecimiento", desc: "Ceremonia donde el alma es guiada al otro mundo con cantos y ofrendas", pueblo: "Bribri" },
+      { name: "Fiesta del maíz", when: "Época de cosecha", desc: "Celebración agradeciendo la cosecha de maíz con bailes y chicha", pueblo: "Cabécar, Ngäbe" },
+      { name: "Migración ngäbe", when: "Estacional", desc: "Las familias ngäbe migran siguiendo los ciclos de la naturaleza y las cosechas", pueblo: "Ngäbe" }
+    ],
+    social: [
+      { topic: "Matrilinealidad", desc: "En los pueblos bribri y cabécar, la pertenencia al clan se hereda por línea materna", pueblo: "Bribri, Cabécar" },
+      { topic: "Autoridad tradicional", desc: "La figura del cacique y el awá son las máximas autoridades dentro de la comunidad", pueblo: "Todos" },
+      { topic: "Territorios indígenas", desc: "Costa Rica reconoce 24 territorios indígenas donde estos pueblos ejercen su autonomía", pueblo: "Todos" },
+      { topic: "Lengua e identidad", desc: "La lengua es el vehículo principal de transmisión de la cosmovisión y el conocimiento ancestral", pueblo: "Todos" }
+    ]
+  },
+
+  qa: [
+    { pregunta: "¿cómo se dice hola en bribri?", respuesta: "En bribri se dice 'di' tte' (se pronuncia 'di tte'). Es un saludo informal y cotidiano que se usa entre personas conocidas.", categoria: "lengua", lengua: "bribri", animacion: "saludo" },
+    { pregunta: "¿cómo se dice gracias en ngäbe?", respuesta: "En ngäbe se dice 'möi nuge' (se pronuncia 'möi nuge'). También se usa 'möi' como saludo general.", categoria: "lengua", lengua: "ngabe", animacion: "saludo" },
+    { pregunta: "¿cómo se dice agua en bribri?", respuesta: "En bribri, agua se dice 'dí' (se pronuncia 'di'). El agua es considerada un elemento sagrado, fuente de vida.", categoria: "lengua", lengua: "bribri", animacion: "naturaleza" },
+    { pregunta: "¿cómo se dice sol en ngäbe?", respuesta: "En ngäbe, sol se dice 'ngö' (se pronuncia 'ngö'). El sol es una deidad importante en la cosmovisión ngäbe.", categoria: "lengua", lengua: "ngabe", animacion: "naturaleza" },
+    { pregunta: "¿qué es el Juego de los Diablitos?", respuesta: "Es la tradición más importante del pueblo boruca. Se celebra entre diciembre y enero. Representa la resistencia indígena contra los españoles. Los 'diablitos' (jóvenes con máscaras de madera) luchan contra el 'toro' (que simboliza al español). Participa toda la comunidad.", categoria: "cultura", animacion: "ceremonia" },
+    { pregunta: "¿quién es Sibú?", respuesta: "Sibú es el dios creador en la cosmovisión bribri y cabécar. Según la tradición, creó el mundo sembrando semillas en el pecho de la tierra. Es una figura central en su cosmovisión.", categoria: "cultura", animacion: "cosmovision" },
+    { pregunta: "¿qué es un awá?", respuesta: "El awá es el médico tradicional bribri y cabécar. Es un intermediario entre el mundo espiritual y el físico. Usa plantas sagradas, cacao, cantos y oraciones para sanar enfermedades del cuerpo y del espíritu.", categoria: "cultura", animacion: "medicina" },
+    { pregunta: "¿qué plantas medicinales usan los bribris?", respuesta: "Los bribris usan muchas plantas medicinales. Algunas de las más importantes son: guarumo (para diabetes), sángrillo (cicatrizante), dormilona (insomnio), zacate limón (digestivo) y jengibre (antiinflamatorio). El awá conoce cuáles usar según la enfermedad.", categoria: "medicina", animacion: "medicina" },
+    { pregunta: "¿qué comidas tradicionales tienen los indígenas de Costa Rica?", respuesta: "Los pueblos indígenas tienen una rica tradición culinaria. Algunos platos importantes son: sopa de ayote, bollos de maíz, pescado ahumado, cacao ceremonial, chicha de maíz, pejibaye y yuca. El maíz y el cacao son ingredientes sagrados en muchas comunidades.", categoria: "comida", animacion: "comida" },
+    { pregunta: "¿cómo se dice maíz en las lenguas indígenas?", respuesta: "Maíz se dice: en bribri 'kókó', en cabécar 'kókó', en maleku 'ópe', en boruca 'yís'. El maíz es la base de la alimentación y tiene un significado sagrado en todas las culturas indígenas de Costa Rica.", categoria: "lengua", animacion: "comida" },
+    { pregunta: "¿qué arte tradicional tienen los ngäbes?", respuesta: "Los ngäbes son famosos por su arte en chaquira (abalorios), con el que crean collares, pulseras y cinturones con diseños geométricos y de animales. También tejen sus vestidos tradicionales de colores brillantes llamados 'nawar'. El teñido natural lo hacen con achiote (rojo) y jagua (azul).", categoria: "arte", animacion: "arte" },
+    { pregunta: "¿cuántos indígenas hay en Costa Rica?", respuesta: "Costa Rica tiene aproximadamente 114,000 personas indígenas, que representan alrededor del 2.4% de la población. Se reconocen 8 pueblos indígenas: Bribri, Cabécar, Ngäbe, Maleku, Boruca, Térraba, Huetar y Bröran (Brorán). Hay 24 territorios indígenas reconocidos legalmente.", categoria: "cultura", animacion: "cosmovision" },
+    { pregunta: "¿qué significa la espiral en el arte indígena?", respuesta: "La espiral es uno de los símbolos más importantes. Representa el camino de la vida, el viaje espiritual que todos emprendemos. También simboliza el movimiento de la energía, el crecimiento y la evolución. Se encuentra en petroglifos huetares y en diseños bribris.", categoria: "arte", animacion: "arte" },
+    { pregunta: "¿cómo se dice madre en las lenguas indígenas?", respuesta: "Madre se dice: en bribri 'kã', en cabécar 'kã', en ngäbe 'mama', en maleku 'máma'. La madre es una figura sagrada, y la tierra también es llamada 'madre' en muchas lenguas.", categoria: "lengua", animacion: "naturaleza" },
+    { pregunta: "¿qué es la chicha?", respuesta: "La chicha es una bebida tradicional fermentada hecha principalmente de maíz. Cada pueblo tiene su propia versión: chicha bribri, chicha boruca, chicha maleku. Se usa en celebraciones, ceremonias y rituales. Es una bebida que une a la comunidad.", categoria: "comida", animacion: "comida" },
+    { pregunta: "¿cómo se organizan socialmente los bribris?", respuesta: "Los bribris se organizan en clanes matrilineales, lo que significa que la pertenencia al clan se hereda por la madre. Cada clan tiene un tótem animal o natural. La familia extendida es la base de la organización social y el awá es una autoridad espiritual.", categoria: "cultura", animacion: "cosmovision" },
+    { pregunta: "¿qué lenguas indígenas se hablan en Costa Rica?", respuesta: "Se hablan 7 lenguas indígenas: Bribri, Cabécar, Ngäbere (Guaymí), Maleku (Guatuso), Boruca, Térraba y Huetar (esta última está extinta como lengua hablada, pero viva en la memoria cultural). Todas pertenecen a la familia lingüística Chibcha.", categoria: "lengua", animacion: "saludo" },
+    { pregunta: "¿qué es un petroglifo?", respuesta: "Los petroglifos son grabados en piedra hechos por los pueblos indígenas antes de la llegada de los españoles. Los huetares dejaron petroglifos con espirales, figuras humanas y animales. Se encuentran en el Valle Central y Pacífico Central. Son mensajes de los ancestros.", categoria: "arte", animacion: "arte" },
+    { pregunta: "¿cómo se dice cacao en bribri?", respuesta: "En bribri, cacao se dice 'kakáu'. El cacao es sagrado para los bribris: es el corazón de la tierra, usado en ceremonias espirituales para conectar con Sibú y el mundo espiritual.", categoria: "lengua", lengua: "bribri", animacion: "comida" },
+    { pregunta: "¿qué es el territorio indígena?", respuesta: "Los territorios indígenas son áreas legalmente reconocidas por el Estado costarricense donde los pueblos indígenas ejercen su autonomía y gobierno propio. Hay 24 territorios que suman aproximadamente el 7% del territorio nacional.", categoria: "cultura", animacion: "cosmovision" },
+    { pregunta: "¿cuál es el plato tradicional boruca?", respuesta: "Uno de los platos más representativos de los borucas es el bollo de maíz relleno, envuelto en hojas y cocido al vapor. Durante el Juego de los Diablitos se preparan comidas especiales y chicha para todos los participantes.", categoria: "comida", animacion: "comida" },
+    { pregunta: "¿qué tradiciones tienen los malekus?", respuesta: "Los malekus son conocidos por su cestería, talla de jícaras decoradas y su tradición de caza con cerbatana. El jaguar es un animal sagrado en su cultura. Anteriormente vivían en grandes casas comunales (palenques).", categoria: "cultura", animacion: "arte" },
+    { pregunta: "¿cómo se dice casa en bribri?", respuesta: "En bribri, casa se dice 'ú' (se pronuncia 'u'). La casa es más que un refugio: es el centro de la vida familiar, donde se comparten historias y se transmiten las tradiciones.", categoria: "lengua", lengua: "bribri", animacion: "saludo" },
+    { pregunta: "¿qué es el maíz para los indígenas?", respuesta: "El maíz es el alimento sagrado por excelencia. En la mitología bribri, el maíz fue un regalo de Sibú a los humanos. Es la base de la alimentación (tortillas, bollos, chicha) y tiene un profundo significado espiritual en todas las culturas indígenas de Costa Rica.", categoria: "comida", animacion: "comida" },
+    { pregunta: "¿qué pintura natural usan los indígenas?", respuesta: "Los indígenas usan tintes naturales de plantas: achiote (rojo intenso), jagua (azul/negro), cúrcuma (amarillo), hojas de índigo (azul), corteza de mangle (marrón). Estos tintes se usan para teñir telas, fibras y para pintura corporal ceremonial.", categoria: "arte", animacion: "arte" },
+    { pregunta: "¿qué significa el jaguar para los malekus?", respuesta: "El jaguar es el animal sagrado más importante para los malekus. Representa el poder, la protección y es un guía espiritual. El baile del jaguar es una tradición que honra a este animal sagrado.", categoria: "cultura", animacion: "naturaleza" },
+    { pregunta: "¿cómo se celebra la muerte en la cultura bribri?", respuesta: "Los bribris tienen un rito fúnebre muy elaborado donde el alma es guiada al otro mundo (Suláyi) mediante cantos, ofrendas y ceremonias. Se cree que el alma viaja a través de un río subterráneo. El awá guía este proceso espiritual.", categoria: "cultura", animacion: "ceremonia" },
+    { pregunta: "¿qué es la miel de abeja para los indígenas?", respuesta: "La miel de abeja es un antibiótico natural y un endulzante tradicional. Se usa para tratar heridas (aplicación directa), para la energía y en infusiones medicinales. Las abejas son respetadas como seres sagrados.", categoria: "medicina", animacion: "medicina" },
+    { pregunta: "¿cuál es la lengua más hablada de Costa Rica?", respuesta: "La lengua indígena más hablada es el bribri, con aproximadamente 7,000 hablantes. Le sigue el ngäbere (5,000) y el cabécar (3,000). Las más amenazadas son el térraba (menos de 30 hablantes) y el huetar (extinto como lengua hablada).", categoria: "lengua", animacion: "saludo" },
+    { pregunta: "¿qué es la cosmovisión indígena?", respuesta: "Es la forma en que los pueblos indígenas entienden el mundo y su lugar en él. Incluye su origen (creación del mundo por Sibú), su relación con la naturaleza (todo está vivo y conectado), sus espíritus y deidades, y sus ceremonias. No separan lo material de lo espiritual.", categoria: "cultura", animacion: "cosmovision" },
+    { pregunta: "¿cómo se dice tierra en bribri?", respuesta: "En bribri, tierra se dice 'míkë' (se pronuncia 'mikë'). La tierra es la madre que nos sostiene. En todas las culturas indígenas la tierra es sagrada y debe ser cuidada.", categoria: "lengua", lengua: "bribri", animacion: "naturaleza" },
+    { pregunta: "¿qué hacen en la celebración del maíz?", respuesta: "La Fiesta del Maíz se celebra cuando llega la cosecha. La comunidad se reúne para agradecer a la tierra. Hay bailes tradicionales, música con tambores y flautas, comida compartida y chicha para todos. Es una celebración de gratitud y comunidad.", categoria: "comida", animacion: "comida" },
+    { pregunta: "¿qué son las máscaras borucas?", respuesta: "Las máscaras borucas son talladas en madera de cedro. Representan rostros con expresiones intensas, pintados con colores vivos. Se usan en el Juego de los Diablitos. Cada máscara es única y hecha a mano por un artesano.", categoria: "arte", animacion: "arte" },
+    { pregunta: "¿qué es la cerbatana?", respuesta: "La cerbatana es un instrumento de caza tradicional usado por los malekus y otros pueblos indígenas. Es un tubo largo hueco por el que se sopla un dardo pequeño. Exige gran precisión y paciencia. Hoy se usa más como práctica cultural que para la caza.", categoria: "cultura", animacion: "naturaleza" },
+    { pregunta: "¿cómo se dice sol en las lenguas indígenas?", respuesta: "Sol se dice: en bribri 'dö', en cabécar 'dö', en ngäbe 'ngö', en maleku 'jí', en boruca 'krá'. El sol es una deidad importante, dador de vida y luz.", categoria: "lengua", animacion: "naturaleza" },
+    { pregunta: "¿qué es la chaquira ngäbe?", respuesta: "La chaquira es un arte tradicional ngäbe donde se tejen abalorios (cuentas pequeñas de colores) para crear collares, pulseras y cinturones con diseños geométricos, animales y florales. Cada diseño tiene un significado cultural. Es una tradición que se transmite de madres a hijas.", categoria: "arte", animacion: "arte" },
+    { pregunta: "¿qué es una jícara tallada?", respuesta: "Las jícaras son frutos del árbol de jícara (crescentia cujete) que, secos y tallados, se convierten en recipientes decorativos. Los malekus y borucas tallan figuras de animales, espirales y escenas de la vida cotidiana en ellas.", categoria: "arte", animacion: "arte" },
+    { pregunta: "¿cuántos territorios indígenas hay?", respuesta: "Costa Rica reconoce 24 territorios indígenas, distribuidos en todo el país. Los territorios más grandes están en Talamanca (Bribri y Cabécar) y el sur (Ngäbe). Estos territorios son autónomos y tienen su propio gobierno según la ley indígena.", categoria: "cultura", animacion: "cosmovision" },
+    { pregunta: "¿qué idioma hablaban los huetares?", respuesta: "Los huetares hablaban una lengua de la familia Chibcha, hoy extinta como lengua hablada. Sin embargo, los descendientes huetares están trabajando en la revitalización de su identidad cultural y la recuperación de palabras y tradiciones.", categoria: "lengua", animacion: "saludo" },
+    { pregunta: "¿cuál es la importancia del río?", respuesta: "Los ríos son venas de la tierra, fuentes de vida y de conexión espiritual. En la cosmovisión bribri, el alma viaja a través de un río subterráneo después de la muerte. Los ríos proveen alimento (pescado) y agua para la vida diaria.", categoria: "cultura", animacion: "naturaleza" },
+    { pregunta: "¿qué es el ayote?", respuesta: "El ayote es una calabaza tradicional de la región. Es un alimento versátil: se usa en sopas, hervidos, dulces. Su semilla se usa como antiparasitario natural. Es un ingrediente importante en la cocina indígena costarricense.", categoria: "comida", animacion: "comida" },
+    { pregunta: "¿cómo se dice fuego en bribri?", respuesta: "En bribri, fuego se dice 'chichá' (se pronuncia 'chicha'). El fuego purifica y transforma. Es un elemento central en ceremonias y en la vida cotidiana.", categoria: "lengua", lengua: "bribri", animacion: "naturaleza" },
+    { pregunta: "¿qué es el árbol del mundo?", respuesta: "El Árbol del Mundo es un símbolo central en la cosmovisión bribri. Sus raíces llegan al inframundo, su tronco recorre la tierra y sus ramas tocan el cielo. Conecta todos los niveles de la existencia. Cada ser vivo es parte de este gran árbol.", categoria: "cultura", animacion: "cosmovision" },
+    { pregunta: "¿qué es el cacao para los bribris?", respuesta: "El cacao (kakáu) es sagrado. Es el corazón de la tierra, un regalo de Sibú. Se usa ceremonialmente para sanar, conectar con el mundo espiritual y unir a la comunidad. La ceremonia del cacao es guiada por el awá.", categoria: "comida", animacion: "comida" },
+    { pregunta: "¿qué técnicas de cestería tienen?", respuesta: "La cestería indígena usa fibras de bejuco, caña brava, palma y junco. Se tejen canastos, petates, aventadores y utensilios. Los malekus son reconocidos por su cestería fina. Cada pieza puede tardar días en completarse.", categoria: "arte", animacion: "arte" },
+    { pregunta: "¿qué es el zacate limón?", respuesta: "El zacate limón es una planta medicinal usada por todos los pueblos indígenas. Sirve como digestivo, calmante para los nervios y para tratar resfriados. Se prepara en infusión con las hojas frescas o secas.", categoria: "medicina", animacion: "medicina" },
+    { pregunta: "¿qué es un palenque?", respuesta: "Un palenque es una vivienda tradicional grande, de forma cónica o rectangular, con techo de paja o palma. Antiguamente varias familias vivían juntas en un mismo palenque. Hoy los malekus y bribris aún construyen palenques para reuniones comunitarias.", categoria: "cultura", animacion: "naturaleza" },
+    { pregunta: "¿qué significado tiene el maíz?", respuesta: "El maíz es más que alimento: es identidad, es historia, es espiritualidad. En la mitología bribri, el maíz fue sembrado por Sibú en el pecho de la tierra. Sin maíz no hay vida. Es la base de la alimentación y de las celebraciones.", categoria: "comida", animacion: "comida" },
+    { pregunta: "¿cómo se dice luna en ngäbe?", respuesta: "En ngäbe, luna se dice 'nä' (se pronuncia 'nä'). La luna es la guía nocturna, asociada con la fertilidad y los ciclos de la naturaleza.", categoria: "lengua", lengua: "ngabe", animacion: "naturaleza" }
+  ]
+};
+
+const VOCES_TTS = {
+  synthesis: window.speechSynthesis,
+  voice: null,
+  voiceName: '',
+  isSpeaking: false,
+  isListening: false,
+  recognition: null,
+  onResult: null,
+  onListeningChange: null,
+  autoRestart: false,
+  manualStop: false,
+
+  init() {
+    if (!window.speechSynthesis) { console.warn('TTS no soportado'); return; }
+    this.loadVoices();
+    if (speechSynthesis.onvoiceschanged !== undefined)
+      speechSynthesis.onvoiceschanged = () => this.loadVoices();
+
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SR) {
+      this.recognition = new SR();
+      this.recognition.lang = 'es-ES';
+      this.recognition.continuous = true;
+      this.recognition.interimResults = true;
+      this.recognition.maxAlternatives = 3;
+
+      this.recognition.onresult = (e) => {
+        let finalTranscript = '';
+        let interimTranscript = '';
+        for (let i = e.resultIndex; i < e.results.length; i++) {
+          const transcript = e.results[i][0].transcript;
+          if (e.results[i].isFinal) finalTranscript += transcript;
+          else interimTranscript += transcript;
+        }
+        if (this.onResult) this.onResult(finalTranscript || interimTranscript, !!finalTranscript);
+      };
+
+      this.recognition.onend = () => {
+        if (this.isListening && !this.manualStop) {
+          try { this.recognition.start(); } catch(e) {}
+        } else {
+          this.isListening = false;
+          this.manualStop = false;
+          if (this.onListeningChange) this.onListeningChange(false);
+        }
+      };
+
+      this.recognition.onerror = (e) => {
+        if (e.error === 'no-speech' || e.error === 'aborted') return;
+        console.warn('Speech error:', e.error);
+        this.isListening = false;
+        if (this.onListeningChange) this.onListeningChange(false);
+      };
+    }
+  },
+
+  loadVoices() {
+    const voices = this.synthesis.getVoices();
+    const preferred = [
+      'Microsoft Helena',
+      'Microsoft Sabina',
+      'Microsoft Laura',
+      'Microsoft Pablo',
+      'Google español',
+      'Google español de Estados Unidos',
+      'es-ES'
+    ];
+    for (const name of preferred) {
+      this.voice = voices.find(v => v.name.includes(name));
+      if (this.voice) { this.voiceName = this.voice.name; break; }
+    }
+    if (!this.voice) this.voice = voices.find(v => v.lang.startsWith('es')) || voices[0] || null;
+    if (this.voice) this.voiceName = this.voice.name;
+  },
+
+  speak(text, onEnd) {
+    if (!this.synthesis) return;
+    this.synthesis.cancel();
+    this.loadVoices();
+    const cleanText = text.replace(/<[^>]*>/g, '').trim();
+    if (!cleanText) return;
+
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.lang = 'es-ES';
+    utterance.rate = 0.85;
+    utterance.pitch = 1.0;
+    utterance.volume = 1;
+    if (this.voice) utterance.voice = this.voice;
+
+    this.isSpeaking = true;
+    utterance.onend = () => { this.isSpeaking = false; if (onEnd) onEnd(); };
+    utterance.onerror = () => { this.isSpeaking = false; };
+    this.synthesis.speak(utterance);
+  },
+
+  stop() {
+    if (this.synthesis) this.synthesis.cancel();
+    this.isSpeaking = false;
+  },
+
+  startListening() {
+    if (!this.recognition) {
+      alert('El reconocimiento de voz no está disponible en este navegador. Prueba con Chrome, Edge o Brave.');
+      return;
+    }
+    if (this.isListening) { this.stopListening(); return; }
+    this.manualStop = false;
+    this.isListening = true;
+    if (this.onListeningChange) this.onListeningChange(true);
+    try { this.recognition.start(); } catch(e) { this.isListening = false; }
+  },
+
+  stopListening() {
+    if (this.recognition && this.isListening) {
+      this.manualStop = true;
+      try { this.recognition.stop(); } catch(e) {}
+      this.isListening = false;
+      if (this.onListeningChange) this.onListeningChange(false);
+    }
+  },
+
+  toggleListening() {
+    if (this.isListening) this.stopListening();
+    else this.startListening();
+  },
+
+  isSupported() {
+    return !!(window.speechSynthesis && (window.SpeechRecognition || window.webkitSpeechRecognition));
+  }
+};
+
+const VOCES_QA = {
+  findAnswer(query) {
+    const q = query.toLowerCase().trim();
+    if (!q) return null;
+
+    const palabras = q.split(/\s+/).filter(p => p.length > 2);
+
+    let best = null;
+    let bestScore = 0;
+
+    for (const entry of VOCES.qa) {
+      const p = entry.pregunta.toLowerCase();
+      let score = 0;
+
+      if (q === p) score = 100;
+      else if (p.includes(q)) score = 80;
+      else if (q.includes(p)) score = 70;
+
+      for (const word of palabras) {
+        if (p.includes(word)) score += 15;
+      }
+
+      for (const word of palabras) {
+        const similar = VOCES.qa.filter(e =>
+          e.pregunta.toLowerCase().includes(word) && e !== entry
+        );
+        if (similar.length > 0) score += 5;
+      }
+
+      if (score > bestScore) {
+        bestScore = score;
+        best = { entry, score: bestScore };
+      }
+    }
+
+    if (best && best.score >= 20) return best.entry;
+
+    const cats = ['lengua', 'comida', 'medicina', 'arte', 'cultura'];
+    const catMatch = cats.find(c => q.includes(c) || q.includes(c.replace('_','')));
+
+    for (const word of palabras) {
+      for (const lang of Object.values(VOCES.languages)) {
+        if (lang.name.toLowerCase().includes(word)) {
+          const info = `El pueblo ${lang.name} habita en ${lang.region}. Su lengua pertenece a la familia ${lang.family}. ${lang.description}`;
+          return {
+            pregunta: query,
+            respuesta: info,
+            categoria: 'cultura',
+            animacion: 'cosmovision'
+          };
+        }
+      }
+    }
+
+    for (const word of palabras) {
+      for (const lang of Object.values(VOCES.languages)) {
+        for (const [, catWords] of Object.entries(lang.words)) {
+          for (const w of catWords) {
+            if (w.es.toLowerCase().includes(word)) {
+              return {
+                pregunta: query,
+                respuesta: `En ${lang.name} se dice <span class="word-highlight">"${w.native}"</span> (se pronuncia "${w.pron}"). ${w.nota || ''}${word === w.es.toLowerCase() || q.includes(w.es.toLowerCase()) ? '' : ` La palabra "${w.es}" se traduce como "${w.native}".`}`,
+                categoria: 'lengua',
+                animacion: 'saludo'
+              };
+            }
+          }
+        }
+      }
+    }
+
+    if (palabras.some(w => ['comida','comer','plato','alimento','bebida'].includes(w))) {
+      const allFoods = [];
+      for (const [, pueblo] of Object.entries(VOCES.foods)) {
+        if (pueblo.dishes) allFoods.push(...pueblo.dishes.map(d => ({...d, pueblo})));
+      }
+      const foodItems = VOCES.foods.general.traditional_ingredients.slice(0, 5);
+      return {
+        pregunta: query,
+        respuesta: `La alimentación indígena de Costa Rica es variada y rica. Algunos ingredientes tradicionales son: ${foodItems.map(i => i.name).join(', ')}. Los pueblos preparan bollos de maíz, sopas, chichas y pescado ahumado. El maíz y el cacao son alimentos sagrados.`,
+        categoria: 'comida',
+        animacion: 'comida'
+      };
+    }
+
+    if (palabras.some(w => ['medicina','medicinal','planta','enfermedad','curar','sanar','remedio'].includes(w))) {
+      const plants = VOCES.medicine.plants.slice(0, 4);
+      return {
+        pregunta: query,
+        respuesta: `Las plantas medicinales son fundamentales en la medicina indígena. Algunas importantes: ${plants.map(p => `${p.name} (${p.uso})`).join(', ')}. El awá o médico tradicional es quien conoce las propiedades de cada planta y las usa según la enfermedad.`,
+        categoria: 'medicina',
+        animacion: 'medicina'
+      };
+    }
+
+    if (palabras.some(w => ['arte','artesanía','artesania','tallar','tejer','pintar','diseño'].includes(w))) {
+      const arts = VOCES.art.techniques.slice(0, 4);
+      return {
+        pregunta: query,
+        respuesta: `Las artes indígenas incluyen: ${arts.map(a => `${a.name} (${a.pueblo})`).join(', ')}. Los símbolos como la espiral, el jaguar y el árbol del mundo tienen profundos significados espirituales.`,
+        categoria: 'arte',
+        animacion: 'arte'
+      };
+    }
+
+    return null;
+  },
+
+  getSuggestions() {
+    return VOCES.qa.slice(0, 8);
+  },
+
+  getCategoryCounts() {
+    const counts = {};
+    for (const entry of VOCES.qa) {
+      counts[entry.categoria] = (counts[entry.categoria] || 0) + 1;
+    }
+    const catNames = { lengua: 'Lenguas', comida: 'Alimentación', medicina: 'Medicina', arte: 'Arte', cultura: 'Cultura' };
+    return Object.entries(counts).map(([k, v]) => ({ id: k, name: catNames[k] || k, count: v }));
+  }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  VOCES_TTS.init();
+  let currentQuery = '';
+  let lastAnimacion = '';
+
+  const $ = (sel) => document.querySelector(sel);
+  const $$ = (sel) => document.querySelectorAll(sel);
+
+  const pages = {
+    home: () => { renderHome(); },
+    preguntar: () => { renderQA(); },
+    explorar: () => { renderExplore(); },
+    pueblos: () => { renderPueblos(); },
+    glosario: () => { renderGlosario(); }
+  };
+
+  function navigate(page) {
+    $$('.section').forEach(s => s.classList.remove('active'));
+    const section = document.getElementById(`page-${page}`);
+    if (section) section.classList.add('active');
+    $$('.nav-links a').forEach(a => a.classList.toggle('active', a.dataset.page === page));
+    if (pages[page]) pages[page]();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  window.navigateTo = navigate;
+
+  $$('.nav-links a').forEach(a => {
+    a.addEventListener('click', (e) => { e.preventDefault(); navigate(a.dataset.page); });
+  });
+
+  const toggle = document.querySelector('.nav-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  if (toggle) {
+    toggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  }
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('nav')) navLinks.classList.remove('open');
+  });
+
+  const p = document.getElementById('particles');
+  if (p) {
+    for (let i = 0; i < 20; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'particle';
+      dot.style.left = Math.random() * 100 + '%';
+      dot.style.top = Math.random() * 100 + '%';
+      dot.style.animationDelay = Math.random() * 6 + 's';
+      dot.style.animationDuration = (4 + Math.random() * 4) + 's';
+      p.appendChild(dot);
+    }
+  }
+
+  function renderHome() {
+    const container = document.getElementById('home-content');
+    if (container.dataset.rendered) return;
+    container.dataset.rendered = 'true';
+
+    const frases = [
+      '"La tierra no es herencia de nuestros padres, es préstamo de nuestros hijos"',
+      '"El agua es la sangre de la tierra" — Sabiduría Bribri',
+      '"Hablar nuestra lengua es mantener viva el alma del pueblo"',
+      '"El maíz es el hijo del sol y la luna" — Cosmovisión Ngäbe',
+      '"Cada río tiene un espíritu, cada montaña un guardián"',
+      '"La palabra es sagrada: una vez dicha, vuela para siempre"'
+    ];
+
+    let fraseIdx = 0;
+    const fraseEl = container.querySelector('.phrase-text');
+    if (fraseEl) {
+      setInterval(() => {
+        fraseIdx = (fraseIdx + 1) % frases.length;
+        fraseEl.style.opacity = '0';
+        setTimeout(() => {
+          fraseEl.textContent = frases[fraseIdx];
+          fraseEl.style.opacity = '1';
+        }, 500);
+      }, 5000);
+    }
+  }
+
+  function renderQA() {
+    const input = document.getElementById('qa-input');
+    const sendBtn = document.getElementById('qa-send');
+    const voiceBtn = document.getElementById('qa-voice');
+    const response = document.getElementById('qa-response');
+    const suggestions = document.getElementById('qa-suggestions');
+    const voiceIndicator = document.getElementById('voice-indicator');
+
+    if (!input || input.dataset.initialized) return;
+    input.dataset.initialized = '1';
+
+    const sugs = VOCES_QA.getSuggestions();
+    suggestions.innerHTML = sugs.map(s =>
+      `<button class="suggestion-chip">${s.pregunta}</button>`
+    ).join('');
+
+    suggestions.addEventListener('click', (e) => {
+      const chip = e.target.closest('.suggestion-chip');
+      if (chip) {
+        input.value = chip.textContent;
+        processQuery(input.value);
+      }
+    });
+
+    sendBtn.addEventListener('click', () => processQuery(input.value));
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') processQuery(input.value); });
+
+    voiceBtn.addEventListener('click', () => VOCES_TTS.toggleListening());
+
+    VOCES_TTS.onResult = (transcript, isFinal) => {
+      if (isFinal) {
+        input.value = transcript;
+        voiceBtn.classList.remove('has-transcript');
+        processQuery(transcript);
+      } else {
+        input.value = transcript;
+        voiceBtn.classList.add('has-transcript');
+        voiceIndicator.querySelector('.label').textContent = `"${transcript}"`;
+      }
+    };
+
+    VOCES_TTS.onListeningChange = (listening) => {
+      if (listening) {
+        voiceBtn.classList.add('listening');
+        voiceIndicator.classList.add('active');
+      } else {
+        voiceBtn.classList.remove('listening');
+        voiceBtn.classList.remove('has-transcript');
+        voiceIndicator.classList.remove('active');
+      }
+    };
+
+    const listenIndicator = document.getElementById('listening-indicator');
+    if (!VOCES_TTS.isSupported()) {
+      voiceBtn.style.display = 'none';
+    }
+  }
+
+  function processQuery(query) {
+    if (!query || !query.trim()) return;
+    const q = query.trim();
+    currentQuery = q;
+
+    const result = VOCES_QA.findAnswer(q);
+    const response = document.getElementById('qa-response');
+    const input = document.getElementById('qa-input');
+
+    if (!result) {
+      const fallback = `Aún no tengo esa sabiduría registrada. Los abuelos siguen compartiendo este conocimiento. Prueba preguntando sobre lenguas, comidas, medicina, arte o cultura indígena.`;
+      response.innerHTML = `
+        <div class="response-card">
+          <div class="response-category">Sabiduría</div>
+          <div class="response-text">${fallback}</div>
+          <div class="anim-container"><div class="anim-scene anim-cosmovision"><div class="tree-world">🌳</div><div class="stars">✦</div></div></div>
+        </div>
+      `;
+      response.classList.add('visible');
+      VOCES_TTS.speak(fallback);
+      renderAnimation('cosmovision');
+      return;
+    }
+
+    let animHtml = '';
+    const an = result.animacion || 'cosmovision';
+    lastAnimacion = an;
+
+    const anims = {
+      saludo: '<div class="anim-scene anim-saludo"><div class="sun"></div><div class="figure">🧑🏽</div></div>',
+      naturaleza: '<div class="anim-scene anim-naturaleza"><div class="ground"></div><div class="tree"></div></div>',
+      comida: '<div class="anim-scene anim-comida"><div class="pot">🍲</div></div>',
+      medicina: '<div class="anim-scene anim-medicina"><div class="plant">🌿</div><div class="drop">💧</div></div>',
+      arte: '<div class="anim-scene anim-arte"><div class="pattern-draw"></div></div>',
+      ceremonia: '<div class="anim-scene anim-ceremonia"><div class="fire">🔥</div><div class="figures">🧑🏽🧑🏽🧑🏽</div></div>',
+      cosmovision: '<div class="anim-scene anim-cosmovision"><div class="tree-world">🌳</div><div class="stars">✦ ✦ ✦</div></div>'
+    };
+    animHtml = `<div class="anim-container">${anims[an] || anims.cosmovision}</div>`;
+
+    const catLabels = { lengua: 'Lengua', comida: 'Alimentación', medicina: 'Medicina', arte: 'Arte', cultura: 'Cultura' };
+
+    const cleanResponse = result.respuesta.replace(/<[^>]*>/g, '');
+
+    response.innerHTML = `
+      <div class="response-card">
+        <div class="response-category">${catLabels[result.categoria] || 'Sabiduría'}</div>
+        <div class="response-text">${result.respuesta}</div>
+        ${animHtml}
+        <div class="response-actions">
+          <button id="btn-speak" class="btn-speak speaking">⏹ Detener</button>
+          <button id="btn-copy">📋 Copiar</button>
+        </div>
+      </div>
+    `;
+    response.classList.add('visible');
+
+    VOCES_TTS.speak(cleanResponse, () => {
+      const btn = document.getElementById('btn-speak');
+      if (btn) { btn.classList.remove('speaking'); btn.textContent = '🔊 Escuchar'; }
+    });
+
+    document.getElementById('btn-speak').addEventListener('click', () => {
+      const btn = document.getElementById('btn-speak');
+      if (VOCES_TTS.isSpeaking) {
+        VOCES_TTS.stop();
+        btn.classList.remove('speaking');
+        btn.textContent = '🔊 Escuchar';
+      } else {
+        VOCES_TTS.speak(cleanResponse, () => {
+          btn.classList.remove('speaking');
+          btn.textContent = '🔊 Escuchar';
+        });
+        btn.classList.add('speaking');
+        btn.textContent = '⏹ Detener';
+      }
+    });
+
+    document.getElementById('btn-copy').addEventListener('click', () => {
+      navigator.clipboard.writeText(cleanResponse).then(() => {
+        const btn = document.getElementById('btn-copy');
+        btn.textContent = '✓ Copiado';
+        setTimeout(() => { btn.textContent = '📋 Copiar'; }, 2000);
+      });
+    });
+
+    renderAnimation(an);
+  }
+
+  function renderAnimation(type) {
+    const container = document.querySelector('.anim-container');
+    if (!container) return;
+  }
+
+  function renderExplore() {
+    const grid = document.getElementById('explore-grid');
+    if (grid.dataset.rendered) return;
+    grid.dataset.rendered = 'true';
+
+    const cats = [
+      { id: 'lengua', icon: '🗣️', title: 'Lenguas', desc: 'Palabras y frases en las 7 lenguas indígenas', count: countQAByCat('lengua') },
+      { id: 'comida', icon: '🌽', title: 'Alimentación', desc: 'Platos típicos, ingredientes y comida ceremonial', count: countQAByCat('comida') },
+      { id: 'medicina', icon: '🌿', title: 'Medicina', desc: 'Plantas medicinales y prácticas de sanación', count: countQAByCat('medicina') },
+      { id: 'arte', icon: '🎨', title: 'Arte', desc: 'Artesanía, símbolos, técnicas y colores naturales', count: countQAByCat('arte') },
+      { id: 'cultura', icon: '🌎', title: 'Cultura', desc: 'Cosmovisión, ceremonias, historia y tradiciones', count: countQAByCat('cultura') }
+    ];
+
+    grid.innerHTML = cats.map(c => `
+      <div class="explore-card" data-cat="${c.id}">
+        <div class="icon">${c.icon}</div>
+        <h3>${c.title}</h3>
+        <p>${c.desc}</p>
+        <div class="count">${c.count} temas</div>
+      </div>
+    `).join('');
+
+    grid.addEventListener('click', (e) => {
+      const card = e.target.closest('.explore-card');
+      if (card) {
+        const cat = card.dataset.cat;
+        navigate('preguntar');
+        setTimeout(() => {
+          const input = document.getElementById('qa-input');
+          if (input) {
+            const catNames = { lengua: 'dime palabras en lenguas indígenas', comida: 'háblame de comida indígena', medicina: 'qué plantas medicinales usan', arte: 'cuéntame del arte indígena', cultura: 'háblame de la cultura indígena' };
+            input.value = catNames[cat] || cat;
+            processQuery(input.value);
+          }
+        }, 300);
+      }
+    });
+  }
+
+  function countQAByCat(cat) {
+    return VOCES.qa.filter(e => e.categoria === cat).length;
+  }
+
+  function renderPueblos() {
+    const grid = document.getElementById('pueblos-grid');
+    if (grid.dataset.rendered) return;
+    grid.dataset.rendered = 'true';
+
+    const langEntries = Object.entries(VOCES.languages);
+    grid.innerHTML = langEntries.map(([id, lang]) => `
+      <div class="pueblo-card" data-lang="${id}">
+        <div class="name">${lang.name}</div>
+        <div class="name-native">${lang.nameNative} ${lang.speakers > 0 ? `· ${lang.speakers.toLocaleString()} hablantes` : ''}</div>
+        <div class="region">📍 ${lang.region}</div>
+        <div class="speakers">Familia ${lang.family}</div>
+      </div>
+    `).join('');
+
+    grid.addEventListener('click', (e) => {
+      const card = e.target.closest('.pueblo-card');
+      if (card) {
+        const langId = card.dataset.lang;
+        showPuebloDetail(langId);
+      }
+    });
+  }
+
+  function showPuebloDetail(id) {
+    const lang = VOCES.languages[id];
+    if (!lang) return;
+
+    const detail = document.getElementById('pueblo-detail');
+    const grid = document.getElementById('pueblos-grid');
+
+    grid.style.display = 'none';
+    detail.classList.add('visible');
+
+    let wordsHtml = '';
+    for (const [cat, catWords] of Object.entries(lang.words)) {
+      if (catWords.length > 0) {
+        const catName = {saludos:'Saludos',numeros:'Números',naturaleza:'Naturaleza',familia:'Familia',cotidianas:'Cotidianas',cultura_historica:'Historia'};
+        wordsHtml += `<h4 style="color:var(--turquesa);margin:1rem 0 0.5rem;font-size:0.9rem;">${catName[cat] || cat}</h4>`;
+        wordsHtml += `<table class="glosario-table"><tbody>`;
+        catWords.forEach(w => {
+          wordsHtml += `<tr><td class="word-native">${w.native}</td><td>${w.es}</td><td style="color:#666;font-size:0.8rem;">${w.pron ? `/${w.pron}/` : ''}</td></tr>`;
+        });
+        wordsHtml += `</tbody></table>`;
+      }
+    }
+
+    let tradicionesHtml = '';
+    if (lang.cultura && lang.cultura.tradiciones) {
+      tradicionesHtml = `
+        <h4 style="color:var(--oro);margin-top:1.5rem;">Tradiciones</h4>
+        <ul style="color:#aaa;margin-top:0.5rem;">
+          ${lang.cultura.tradiciones.map(t => `<li style="margin-bottom:0.5rem;">${t}</li>`).join('')}
+        </ul>
+      `;
+    }
+
+    detail.innerHTML = `
+      <button class="back-btn" onclick="document.getElementById('pueblo-detail').classList.remove('visible'); document.getElementById('pueblos-grid').style.display='grid';">← Volver</button>
+      <h3>${lang.name} <span style="color:#666;font-size:1rem;font-style:italic;">${lang.nameNative}</span></h3>
+      <p style="color:#888;margin-top:0.3rem;"><strong>Región:</strong> ${lang.region} · <strong>Familia:</strong> ${lang.family} · <strong>Hablantes:</strong> ${lang.speakers.toLocaleString()}</p>
+      <p style="color:#aaa;margin-top:1rem;">${lang.description}</p>
+      ${lang.cultura ? `<p style="color:#bbb;margin-top:1rem;font-style:italic;">"${lang.cultura.cosmovision}"</p>` : ''}
+      ${tradicionesHtml}
+      ${wordsHtml ? `<h4 style="color:var(--oro);margin-top:1.5rem;">Vocabulario</h4>${wordsHtml}` : ''}
+    `;
+  }
+
+  function renderGlosario() {
+    const tbody = document.getElementById('glosario-body');
+    const filterLang = document.getElementById('glosario-lang');
+    const filterCat = document.getElementById('glosario-cat');
+    const searchInput = document.getElementById('glosario-search');
+    if (!tbody || tbody.dataset.rendered) return;
+    tbody.dataset.rendered = 'true';
+
+    const catNames = {saludos:'Saludos',numeros:'Números',naturaleza:'Naturaleza',familia:'Familia',cotidianas:'Cotidianas',cultura_historica:'Historia'};
+
+    let allWords = [];
+    for (const [id, lang] of Object.entries(VOCES.languages)) {
+      for (const [cat, words] of Object.entries(lang.words)) {
+        for (const word of words) {
+          allWords.push({ ...word, langId: id, langName: lang.name, cat, catName: catNames[cat] || cat });
+        }
+      }
+    }
+
+    filterLang.innerHTML = '<option value="all">Todas las lenguas</option>' +
+      Object.entries(VOCES.languages).map(([id, l]) => `<option value="${id}">${l.name}</option>`).join('');
+
+    filterCat.innerHTML = '<option value="all">Todas las categorías</option>' +
+      Object.entries(catNames).map(([k, v]) => `<option value="${k}">${v}</option>`).join('');
+
+    function renderGlosario() {
+      const lang = filterLang.value;
+      const cat = filterCat.value;
+      const search = searchInput.value.toLowerCase();
+
+      let filtered = allWords;
+      if (lang !== 'all') filtered = filtered.filter(w => w.langId === lang);
+      if (cat !== 'all') filtered = filtered.filter(w => w.cat === cat);
+      if (search) filtered = filtered.filter(w =>
+        w.es.toLowerCase().includes(search) ||
+        w.native.toLowerCase().includes(search) ||
+        w.langName.toLowerCase().includes(search)
+      );
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:#666;padding:2rem;">No se encontraron palabras</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(w => `
+        <tr onclick="document.getElementById('qa-input')?.focus();">
+          <td><span style="color:var(--oro);font-weight:600;">${w.native}</span></td>
+          <td>${w.es}</td>
+          <td style="color:#555;font-style:italic;">${w.pron ? `/${w.pron}/` : '—'}</td>
+          <td style="color:#888;">${w.langName}</td>
+        </tr>
+      `).join('');
+    }
+
+    filterLang.addEventListener('change', renderGlosario);
+    filterCat.addEventListener('change', renderGlosario);
+    searchInput.addEventListener('input', renderGlosario);
+    renderGlosario();
+  }
+
+  const heroPhrases = document.querySelector('.phrase-text');
+  if (heroPhrases) {
+    const frases = [
+      '"La tierra no es herencia de nuestros padres, es préstamo de nuestros hijos"',
+      '"El agua es la sangre de la tierra" — Sabiduría Bribri',
+      '"Hablar nuestra lengua es mantener viva el alma del pueblo"',
+      '"El maíz es el hijo del sol y la luna" — Ngäbe',
+      '"Cada río tiene un espíritu, cada montaña un guardián"'
+    ];
+    let i = 0;
+    setInterval(() => {
+      i = (i + 1) % frases.length;
+      heroPhrases.style.opacity = '0';
+      setTimeout(() => { heroPhrases.textContent = frases[i]; heroPhrases.style.opacity = '1'; }, 400);
+    }, 4500);
+  }
+
+  navigate('home');
+});
+</script>
+</body>
+</html>
