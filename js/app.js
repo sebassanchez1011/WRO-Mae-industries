@@ -93,7 +93,28 @@ document.addEventListener('DOMContentLoaded', () => {
     sendBtn.addEventListener('click', () => processQuery(input.value));
     input.addEventListener('keydown', (e) => { if (e.key === 'Enter') processQuery(input.value); });
 
-    voiceBtn.addEventListener('click', () => VOCES_TTS.toggleListening());
+    let pttTranscript = '';
+
+    function startPTT() {
+      pttTranscript = '';
+      input.value = '';
+      input.placeholder = 'Habla ahora...';
+      VOCES_TTS.startPTT();
+    }
+
+    function stopPTT() {
+      input.placeholder = 'Escribe tu pregunta...';
+      VOCES_TTS.stopPTT(() => {
+        const val = input.value.trim();
+        if (val) processQuery(val);
+      });
+    }
+
+    voiceBtn.addEventListener('mousedown', (e) => { e.preventDefault(); startPTT(); });
+    voiceBtn.addEventListener('mouseup', (e) => { e.preventDefault(); stopPTT(); });
+    voiceBtn.addEventListener('mouseleave', (e) => { if (VOCES_TTS.isListening) stopPTT(); });
+    voiceBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startPTT(); });
+    voiceBtn.addEventListener('touchend', (e) => { e.preventDefault(); stopPTT(); });
 
     VOCES_TTS.onResult = (transcript, isFinal) => {
       if (isFinal) {
@@ -110,9 +131,11 @@ document.addEventListener('DOMContentLoaded', () => {
     VOCES_TTS.onListeningChange = (listening) => {
       if (listening) {
         voiceBtn.classList.add('listening');
+        voiceBtn.classList.add('pressed');
         voiceIndicator.classList.add('active');
       } else {
         voiceBtn.classList.remove('listening');
+        voiceBtn.classList.remove('pressed');
         voiceBtn.classList.remove('has-transcript');
         voiceIndicator.classList.remove('active');
       }
