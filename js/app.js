@@ -24,6 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  window.navigateTo = navigate;
+
   $$('.nav-links a').forEach(a => {
     a.addEventListener('click', (e) => { e.preventDefault(); navigate(a.dataset.page); });
   });
@@ -93,34 +95,27 @@ document.addEventListener('DOMContentLoaded', () => {
     sendBtn.addEventListener('click', () => processQuery(input.value));
     input.addEventListener('keydown', (e) => { if (e.key === 'Enter') processQuery(input.value); });
 
-    voiceBtn.addEventListener('click', () => {
-      if (VOCES_TTS.isListening) {
-        VOCES_TTS.stopListening();
-        voiceBtn.classList.remove('listening');
-        voiceIndicator.classList.remove('active');
-      } else {
-        VOCES_TTS.startListening();
-        voiceBtn.classList.add('listening');
-        voiceIndicator.classList.add('active');
-        voiceIndicator.querySelector('.label').textContent = 'Escuchando...';
-      }
-    });
+    voiceBtn.addEventListener('click', () => VOCES_TTS.toggleListening());
 
     VOCES_TTS.onResult = (transcript, isFinal) => {
       if (isFinal) {
         input.value = transcript;
-        voiceBtn.classList.remove('listening');
-        voiceIndicator.classList.remove('active');
+        voiceBtn.classList.remove('has-transcript');
         processQuery(transcript);
       } else {
         input.value = transcript;
+        voiceBtn.classList.add('has-transcript');
         voiceIndicator.querySelector('.label').textContent = `"${transcript}"`;
       }
     };
 
     VOCES_TTS.onListeningChange = (listening) => {
-      if (!listening) {
+      if (listening) {
+        voiceBtn.classList.add('listening');
+        voiceIndicator.classList.add('active');
+      } else {
         voiceBtn.classList.remove('listening');
+        voiceBtn.classList.remove('has-transcript');
         voiceIndicator.classList.remove('active');
       }
     };
@@ -138,19 +133,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const result = VOCES_QA.findAnswer(q);
     const response = document.getElementById('qa-response');
-    const speakBtn = document.getElementById('btn-speak');
     const input = document.getElementById('qa-input');
-    const voiceBtn = document.getElementById('qa-voice');
 
     if (!result) {
+      const fallback = `Aún no tengo esa sabiduría registrada. Los abuelos siguen compartiendo este conocimiento. Prueba preguntando sobre lenguas, comidas, medicina, arte o cultura indígena.`;
       response.innerHTML = `
         <div class="response-card">
           <div class="response-category">Sabiduría</div>
-          <div class="response-text">Aún no tengo esa sabiduría registrada. Los abuelos siguen compartiendo este conocimiento. Prueba preguntando sobre lenguas, comidas, medicina, arte o cultura indígena.</div>
+          <div class="response-text">${fallback}</div>
           <div class="anim-container"><div class="anim-scene anim-cosmovision"><div class="tree-world">🌳</div><div class="stars">✦</div></div></div>
         </div>
       `;
       response.classList.add('visible');
+      VOCES_TTS.speak(fallback);
       renderAnimation('cosmovision');
       return;
     }
@@ -171,6 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
     animHtml = `<div class="anim-container">${anims[an] || anims.cosmovision}</div>`;
 
     const catLabels = { lengua: 'Lengua', comida: 'Alimentación', medicina: 'Medicina', arte: 'Arte', cultura: 'Cultura' };
+    const cleanResponse = result.respuesta.replace(/<[^>]*>/g, '');
 
     response.innerHTML = `
       <div class="response-card">
@@ -178,12 +174,17 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="response-text">${result.respuesta}</div>
         ${animHtml}
         <div class="response-actions">
-          <button id="btn-speak" class="btn-speak">🔊 Escuchar</button>
+          <button id="btn-speak" class="btn-speak speaking">⏹ Detener</button>
           <button id="btn-copy">📋 Copiar</button>
         </div>
       </div>
     `;
     response.classList.add('visible');
+
+    VOCES_TTS.speak(cleanResponse, () => {
+      const btn = document.getElementById('btn-speak');
+      if (btn) { btn.classList.remove('speaking'); btn.textContent = '🔊 Escuchar'; }
+    });
 
     document.getElementById('btn-speak').addEventListener('click', () => {
       const btn = document.getElementById('btn-speak');
@@ -192,15 +193,17 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.classList.remove('speaking');
         btn.textContent = '🔊 Escuchar';
       } else {
-        VOCES_TTS.speak(result.respuesta.replace(/<[^>]*>/g, ''));
+        VOCES_TTS.speak(cleanResponse, () => {
+          btn.classList.remove('speaking');
+          btn.textContent = '🔊 Escuchar';
+        });
         btn.classList.add('speaking');
         btn.textContent = '⏹ Detener';
       }
     });
 
     document.getElementById('btn-copy').addEventListener('click', () => {
-      const text = result.respuesta.replace(/<[^>]*>/g, '');
-      navigator.clipboard.writeText(text).then(() => {
+      navigator.clipboard.writeText(cleanResponse).then(() => {
         const btn = document.getElementById('btn-copy');
         btn.textContent = '✓ Copiado';
         setTimeout(() => { btn.textContent = '📋 Copiar'; }, 2000);
