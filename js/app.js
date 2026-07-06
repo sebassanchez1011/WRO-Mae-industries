@@ -118,6 +118,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!input || input.dataset.initialized) return;
     input.dataset.initialized = '1';
 
+    const setVoiceLabel = (message) => {
+      const label = voiceIndicator?.querySelector('.label');
+      if (label && message) label.textContent = message;
+    };
+
     renderSuggestions(currentCategory);
 
     suggestions.addEventListener('click', (e) => {
@@ -140,11 +145,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (isFinal) {
         input.value = transcript;
         voiceBtn.classList.remove('has-transcript');
+        setVoiceLabel('Procesando pregunta...');
         processQuery(transcript);
       } else {
         input.value = transcript;
         voiceBtn.classList.add('has-transcript');
-        voiceIndicator.querySelector('.label').textContent = `"${transcript}"`;
+        setVoiceLabel(`"${transcript}"`);
       }
     };
 
@@ -152,6 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (listening) {
         voiceBtn.classList.add('listening');
         voiceIndicator.classList.add('active');
+        setVoiceLabel('Escuchando...');
       } else {
         voiceBtn.classList.remove('listening');
         voiceBtn.classList.remove('has-transcript');
@@ -159,9 +166,16 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     };
 
-    const listenIndicator = document.getElementById('listening-indicator');
+    VOCES_TTS.onStatus = (message) => setVoiceLabel(message);
+    VOCES_TTS.onError = (message) => {
+      setVoiceLabel(message);
+      voiceIndicator.classList.add('active');
+      setTimeout(() => voiceIndicator.classList.remove('active'), 3500);
+    };
+
     if (!VOCES_TTS.isSupported()) {
       voiceBtn.style.display = 'none';
+      setVoiceLabel('Tu navegador no soporta preguntas por voz. Probá con Chrome o Edge.');
     }
   }
 
