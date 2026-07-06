@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voces de la Tierra — Lenguas y Culturas Indígenas de Costa Rica</title>
+  <meta name="description" content="Portal interactivo para aprender y preservar las lenguas, comidas, medicina, arte y cultura de los pueblos indígenas de Costa Rica.">
+  <meta name="theme-color" content="#C85A32">
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23C85A32'/%3E%3Ctext x='50' y='65' font-size='40' text-anchor='middle' fill='white'%3E🌿%3C/text%3E%3C/svg%3E" type="image/svg+xml">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <img src="assets/images/logo.jpg" alt="Voces de la Tierra" class="logo-img">
+    Voces de la <span>Tierra</span>
+  </div>
+  <div class="nav-links">
+    <a href="#" data-page="home" class="active">Inicio</a>
+    <a href="#" data-page="preguntar">Preguntar</a>
+    <a href="#" data-page="explorar">Explorar</a>
+    <a href="#" data-page="pueblos">Pueblos</a>
+    <a href="#" data-page="glosario">Glosario</a>
+    <a href="#" data-page="mapa">Mapa</a>
+    <a href="#" data-page="juego">Juego</a>
+    <a href="#" data-page="galeria">Galería</a>
+  </div>
+  <button class="nav-toggle" aria-label="Menú">☰</button>
+</nav>
+
+<!-- HOME -->
+<section class="section active" id="page-home">
+  <div class="hero">
+    <div class="hero-particles" id="particles"></div>
+    <div class="hero-badge">⟡ Patrimonio Vivo de Costa Rica</div>
+    <h1>Voces de la <span class="highlight">Tierra</span></h1>
+    <p class="subtitle">Portal interactivo para aprender y preservar las lenguas, comidas, medicina, arte y cosmovisión de los pueblos indígenas de Costa Rica</p>
+    <div class="phrase-rotator">
+      <span class="phrase-text" style="transition:opacity 0.5s">"La tierra no es herencia de nuestros padres, es préstamo de nuestros hijos"</span>
+    </div>
+    <div class="btn-group">
+      <a href="#" class="btn btn-primary" onclick="window.navigateTo('preguntar');return false;">🎤 Preguntar</a>
+      <a href="#" class="btn btn-secondary" onclick="window.navigateTo('explorar');return false;">🌿 Explorar</a>
+    </div>
+  </div>
+  <div id="home-content"></div>
+  <div class="pattern-divider"></div>
+</section>
+
+<!-- PREGUNTAR -->
+<section class="section" id="page-preguntar">
+  <div class="section-tag">Sabiduría ancestral</div>
+  <h2>Pregunta, te responderá la memoria</h2>
+  <p class="section-desc">Habla o escribe tu pregunta sobre lenguas, comidas, medicina, arte o cultura indígena. La voz de los abuelos te responderá.</p>
+
+  <div class="qa-container">
+    <div class="qa-input-group">
+      <input type="text" id="qa-input" placeholder='Ej: "¿cómo se dice hola en bribri?" o "¿qué es el Juego de los Diablitos?"' autocomplete="off">
+      <button class="btn-voice" id="qa-voice" title="Preguntar por voz">🎤</button>
+      <button class="btn-send" id="qa-send">Preguntar →</button>
+    </div>
+
+    <div class="voice-indicator" id="voice-indicator">
+      <div class="wave"><span></span><span></span><span></span><span></span><span></span></div>
+      <span class="label">Escuchando...</span>
+    </div>
+
+    <div class="qa-suggestions" id="qa-suggestions"></div>
+
+    <div class="qa-response" id="qa-response">
+      <div class="response-card">
+        <div class="response-category">Sabiduría</div>
+        <div class="response-text">Pregunta algo y te compartiré el conocimiento de los pueblos indígenas de Costa Rica.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPLORAR -->
+<section class="section" id="page-explorar">
+  <div class="section-tag">Conocimiento</div>
+  <h2>Explora la sabiduría indígena</h2>
+  <p class="section-desc">Selecciona una categoría para descubrir las tradiciones y conocimientos de los pueblos originarios.</p>
+  <div class="explore-grid" id="explore-grid"></div>
+</section>
+
+<!-- PUEBLOS -->
+<section class="section" id="page-pueblos">
+  <div class="section-tag">Pueblos indígenas</div>
+  <h2>Los 7 pueblos de Costa Rica</h2>
+  <p class="section-desc">Cada pueblo tiene su propia lengua, cosmovisión y tradiciones. Todos pertenecen a la gran familia Chibcha.</p>
+  <div class="pueblos-grid" id="pueblos-grid"></div>
+  <div class="pueblo-detail" id="pueblo-detail"></div>
+</section>
+
+<!-- GLOSARIO -->
+<section class="section" id="page-glosario">
+  <div class="section-tag">Vocabulario</div>
+  <h2>Glosario de lenguas indígenas</h2>
+  <p class="section-desc">Busca palabras en las 7 lenguas indígenas de Costa Rica con su traducción al español y pronunciación.</p>
+
+  <div class="glosario-controls">
+    <select id="glosario-lang"></select>
+    <select id="glosario-cat"></select>
+    <input type="text" id="glosario-search" placeholder="Buscar palabra...">
+  </div>
+
+  <table class="glosario-table">
+    <thead><tr><th>Lengua indígena</th><th>Español</th><th>Pronunciación</th><th>Pueblo</th></tr></thead>
+    <tbody id="glosario-body"></tbody>
+  </table>
+</section>
+
+<!-- MAPA -->
+<section class="section" id="page-mapa">
+  <div class="section-tag">Territorios</div>
+  <h2>Mapa de los Pueblos Indígenas</h2>
+  <p class="section-desc">Explora los territorios desde la cámara del rover-7. Cada marcador revela fotografías y conocimiento ancestral.</p>
+  <div class="map-zones" id="map-zones"></div>
+  <div class="map-layout">
+    <div class="map-container" id="map-container"></div>
+    <div class="map-photo-panel" id="map-photo-panel">
+      <div class="photo-panel-hint">Selecciona un marcador en el mapa para ver las fotografías del rover-7</div>
+    </div>
+  </div>
+</section>
+
+<!-- JUEGO -->
+<section class="section" id="page-juego">
+  <div class="section-tag">Desafío</div>
+  <h2>Juego de la Memoria Ancestral</h2>
+  <p class="section-desc">Responde preguntas sobre lenguas, cultura, medicina, arte y alimentación indígena. Cada acierto suma 10 puntos. <strong style="color:var(--terracota);">Tienes 3 vidas, ¡no las pierdas!</strong></p>
+  <div class="game-container" id="game-container">
+    <div class="game-start" id="game-start">
+      <div class="game-hud-preview">
+        <svg viewBox="0 0 200 60" class="rover-deco"><rect x="20" y="15" width="160" height="30" rx="6" fill="none" stroke="var(--turquesa)" stroke-width="1.5"/><circle cx="40" cy="30" r="6" fill="var(--terracota)"/><circle cx="100" cy="30" r="6" fill="var(--oro)"/><circle cx="160" cy="30" r="6" fill="var(--turquesa)"/><line x1="46" y1="30" x2="94" y2="30" stroke="var(--oro)" stroke-width="0.5"/><line x1="106" y1="30" x2="154" y2="30" stroke="var(--oro)" stroke-width="0.5"/></svg>
+      </div>
+      <h3>¿Qué tanto sabes?</h3>
+      <p>Demuestra tu conocimiento sobre los pueblos indígenas de Costa Rica. 10 preguntas, 3 vidas, bonus por racha.</p>
+      <button class="btn btn-primary" id="game-start-btn">▶ COMENZAR</button>
+      <div class="game-scores" id="game-scores"></div>
+    </div>
+    <div class="game-play" id="game-play" style="display:none;">
+      <div class="game-hud" id="game-hud">
+        <div class="hud-item hud-score"><span class="hud-label">SCORE</span><span class="hud-value" id="hud-score">0</span></div>
+        <div class="hud-item hud-lives"><span class="hud-label">VIDAS</span><span class="hud-value" id="hud-lives">❤❤❤</span></div>
+        <div class="hud-item hud-streak" style="display:none;"><span class="hud-label">RACHA</span><span class="hud-value" id="hud-streak">0x</span></div>
+        <div class="hud-item hud-progress"><span class="hud-label">PROGRESO</span><span class="hud-value" id="hud-progress">1/10</span></div>
+      </div>
+      <div class="game-question slide-in" id="game-question">
+        <div class="question-category" id="question-category"></div>
+        <div class="question-text" id="question-text"></div>
+      </div>
+      <div class="game-options" id="game-options"></div>
+      <div class="game-feedback" id="game-feedback"></div>
+    </div>
+    <div class="game-result" id="game-result" style="display:none;">
+      <div class="result-icon" id="result-icon">🏆</div>
+      <h3 id="result-title">¡Completado!</h3>
+      <div class="result-stats">
+        <div class="stat"><span class="stat-label">Puntaje final</span><span class="stat-value" id="result-score">0</span></div>
+        <div class="stat"><span class="stat-label">Respondidas</span><span class="stat-value" id="result-answered">0/10</span></div>
+        <div class="stat"><span class="stat-label">Mejor racha</span><span class="stat-value" id="result-streak">0</span></div>
+      </div>
+      <div class="result-name-input">
+        <input type="text" id="result-name" placeholder="Tu nombre" maxlength="20">
+        <button class="btn btn-primary" id="result-save">GUARDAR</button>
+      </div>
+      <button class="btn btn-secondary" id="result-replay">↻ Jugar de nuevo</button>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section class="section" id="page-galeria">
+  <div class="section-tag">Arte y simbolismo</div>
+  <h2>Galería de Arte Ancestral</h2>
+  <p class="section-desc">Símbolos, técnicas y arte de los pueblos indígenas de Costa Rica representados con iconografía digital.</p>
+  <div class="gallery-container" id="gallery-container"></div>
+</section>
+
+<!-- LISTENING INDICATOR (fixed) -->
+<div class="listening-indicator" id="listening-indicator">🎤 Escuchando...</div>
+
+<!-- CLOUD TTS SETTINGS FLOATING BUTTON -->
+<button class="tts-settings-btn" id="ttsSettingsBtn" title="Configurar voz cloud (Google TTS)" aria-label="Configurar voz">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+  </svg>
+</button>
+
+<!-- CLOUD TTS SETTINGS MODAL -->
+<div class="tts-modal-overlay" id="ttsModalOverlay">
+  <div class="tts-modal">
+    <button class="tts-modal-close" id="ttsModalClose">&times;</button>
+    <h3>Voz Cloud (Google TTS)</h3>
+    <p class="tts-modal-desc">Configura una API key de Google Cloud Text-to-Speech para obtener voz con calidad humana tipo Siri. <br><br>
+      <strong>Cómo obtener tu API key gratis:</strong><br>
+      1. Ve a <a href="https://console.cloud.google.com/" target="_blank">console.cloud.google.com</a><br>
+      2. Crea un proyecto nuevo<br>
+      3. Habilita "Cloud Text-to-Speech API"<br>
+      4. Ve a "Credenciales" → "Crear credenciales" → "API Key"<br>
+      5. Copia la API key y pégala aquí abajo<br>
+      <em style="font-size:0.85rem;color:#999;">Gratis: 1 millón de caracteres/mes. Voz: es-US-Neural2-V3.</em>
+    </p>
+    <div class="tts-modal-input-group">
+      <input type="text" id="ttsApiKey" placeholder="Pega tu API key de Google Cloud TTS" autocomplete="off">
+      <button class="btn btn-primary" id="ttsApiSave">Guardar</button>
+    </div>
+    <div class="tts-modal-status" id="ttsModalStatus"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-pattern"></div>
+  <div class="footer-logo"><img src="assets/images/logo.jpg" alt="Voces de la Tierra" class="footer-logo-img"> <strong>Voces de la Tierra</strong></div>
+  <p>Proyecto de preservación cultural · Costa Rica 2026</p>
+  <p style="margin-top:0.3rem;font-size:0.75rem;">Datos basados en fuentes académicas y comunitarias. Cada palabra es un acto de resistencia cultural.</p>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/tts.js"></script>
+<script src="js/qa.js"></script>
+<script src="js/game.js"></script>
+<script src="js/gallery.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/app.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+</script>
+</body>
+</html>
